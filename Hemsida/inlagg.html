@@ -1,10 +1,11 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="sv">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Inlägg – Voxna Södra Fiskevårdsförening</title>
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet"/>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -33,12 +34,8 @@
       box-shadow: 0 0 12px rgba(0,0,0,.15);
     }
 
-    /* HEADER */
-    #header {
-      display: none;
-    }
+    #header { display: none; }
 
-    /* HERO */
     #hero {
       width: 100vw;
       height: min(454px, 40vh);
@@ -55,22 +52,7 @@
       object-position: center 60%;
       display: block;
     }
-    #hero .fallback {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(160deg, #2d5a3d 0%, #4a8a5a 40%, #7ab87a 70%, #a8d4a8 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #hero .fallback span {
-      color: rgba(255,255,255,0.35);
-      font-size: 0.85rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
 
-    /* NAV */
     nav {
       background: #2b2b2b;
       width: 100vw;
@@ -85,16 +67,8 @@
       align-items: center;
       padding: 0 16px;
     }
-    nav ul li {
-      display: flex;
-      align-items: center;
-    }
-    nav ul li + li::before {
-      content: "/";
-      color: #666;
-      padding: 0 4px;
-      font-size: 0.85rem;
-    }
+    nav ul li { display: flex; align-items: center; }
+    nav ul li + li::before { content: "/"; color: #666; padding: 0 4px; font-size: 0.85rem; }
     nav ul li a {
       display: block;
       padding: 14px 12px;
@@ -107,17 +81,8 @@
       transition: color .15s;
     }
     nav ul li a:hover { color: #fff; }
-    nav ul li a.active {
-      color: #fff;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-    nav ul li a.has-dropdown::after {
-      content: " ▾";
-      font-size: 0.7rem;
-    }
+    nav ul li a.active { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
 
-    /* CONTENT */
     #content-area {
       display: flex;
       padding: 24px;
@@ -134,22 +99,14 @@
       margin-bottom: 16px;
       color: var(--dark);
     }
+
     .post {
       margin-bottom: 28px;
       padding-bottom: 20px;
       border-bottom: 1px solid #e8e8e8;
     }
-    .post:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
-    .post time {
-      display: block;
-      font-size: 0.85rem;
-      color: #777;
-      margin-bottom: 10px;
-    }
+    .post:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .post time { display: block; font-size: 0.85rem; color: #777; margin-bottom: 10px; }
     .post h3 {
       font-family: 'Merriweather', serif;
       font-size: 1.05rem;
@@ -157,18 +114,12 @@
       margin-bottom: 10px;
       color: var(--dark);
     }
-    .post p {
-      line-height: 1.7;
-      color: #444;
-      margin-bottom: 8px;
-    }
+    .post p { line-height: 1.7; color: #444; margin-bottom: 8px; }
 
-    /* SIDEBAR */
-    #sidebar {
-      width: 190px;
-      flex-shrink: 0;
-      font-size: 0.88rem;
-    }
+    .loading { color: #777; font-style: italic; }
+    .error { color: #a00; font-size: 0.9rem; }
+
+    #sidebar { width: 190px; flex-shrink: 0; font-size: 0.88rem; }
     .sidebar-section { margin-bottom: 20px; }
     .sidebar-section h3 {
       font-size: 0.82rem;
@@ -180,11 +131,6 @@
       border-bottom: 1px solid var(--border);
       padding-bottom: 3px;
     }
-    .sidebar-section p {
-      line-height: 1.6;
-      color: #555;
-      font-size: 0.85rem;
-    }
     .sidebar-section a {
       display: block;
       color: var(--link);
@@ -194,7 +140,6 @@
     .sidebar-section a:hover { text-decoration: underline; }
     .sidebar-section a::before { content: "• "; color: var(--accent); }
 
-    /* FOOTER */
     #footer {
       border-top: 2px solid var(--dark);
       padding: 14px 24px;
@@ -237,7 +182,7 @@
     <div id="main">
       <h2>Senaste nyheter</h2>
       <div id="news-posts">
-        <p>Laddar nyheter…</p>
+        <p class="loading">Laddar inlägg…</p>
       </div>
     </div>
 
@@ -254,71 +199,113 @@
   </div>
 </div>
 
+<!-- Byt ut DITT_GITHUB_ANVÄNDARNAMN och DITT_REPO mot dina egna -->
 <script>
-  const storageKey = 'voxnaNewsPosts';
-  const newsPosts = document.getElementById('news-posts');
-  const recentLinks = document.getElementById('recent-links');
-
-  const defaultPosts = [
-    { id: 'default-1', date: '2026-05-01', title: 'Ny fiskerestriktion vid Finnstugaströmmen', content: 'Från och med nästa månad måste all fisk i Finnstugaströmmen återutsättas. Detta är ett viktigt steg för att skydda beståndet av öring och harr i området. Vi uppmanar alla medlemmar att kontrollera sina fiskekort och följa de nya reglerna för att undvika böter.' },
-    { id: 'default-2', date: '2026-04-15', title: 'Vårstäddagen vid Voxnaån', content: 'Vårens städdag blir lördagen den 20 april. Vi samlas klockan 10:00 vid Voxna Livs för en gemensam insats längs med ån. Medlemmar som hjälper till bjuds på kaffe och smörgås. Ta gärna med handskar och vadarbyxor.' },
-    { id: 'default-3', date: '2026-03-30', title: 'Ny återförsäljare för fiskekort', content: 'Voxnabruks Kanot & Camping säljer nu fiskekort i butiken. Det ger fler möjligheter för besökare att köpa kort på plats. Swish-numret för direktköp är fortfarande 1231280221, men nu finns också fysisk försäljning under butikens öppettider.' }
-  ];
+  const GITHUB_USER = 'DITT_GITHUB_ANVÄNDARNAMN';
+  const GITHUB_REPO = 'voxna-sodra-fvf';
+  const POSTS_PATH = 'Hemsida/inlagg';
 
   function formatSwedishDate(dateString) {
     const date = new Date(dateString);
     return date.toLocaleDateString('sv-SE', { year: 'numeric', month: 'long', day: 'numeric' });
   }
 
-  function getMonthYear(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('sv-SE', { year: 'numeric', month: 'long' });
+  // Enkel markdown-parser för title, date och body
+  function parseFrontmatter(text) {
+    const match = text.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+    if (!match) return null;
+    const meta = {};
+    match[1].split('\n').forEach(line => {
+      const [key, ...val] = line.split(':');
+      if (key) meta[key.trim()] = val.join(':').trim().replace(/^"|"$/g, '');
+    });
+    meta.body = match[2].trim();
+    return meta;
   }
 
-  function createPostElement(post) {
-    const article = document.createElement('article');
-    article.className = 'post';
-    article.id = `post-${post.id}`;
-
-    const timeEl = document.createElement('time');
-    timeEl.dateTime = post.date;
-    timeEl.textContent = formatSwedishDate(post.date);
-    article.appendChild(timeEl);
-
-    const title = document.createElement('h3');
-    title.textContent = post.title;
-    article.appendChild(title);
-
-    const paragraph = document.createElement('p');
-    paragraph.textContent = post.content;
-    article.appendChild(paragraph);
-
-    return article;
+  // Konverterar enkel markdown till HTML
+  function simpleMarkdown(text) {
+    return text
+      .replace(/^### (.+)$/gm, '<h4>$1</h4>')
+      .replace(/^## (.+)$/gm, '<h3>$1</h3>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/\n\n/g, '</p><p>')
+      .replace(/^/, '<p>')
+      .replace(/$/, '</p>');
   }
 
-  function loadSavedPosts() {
-    const stored = JSON.parse(localStorage.getItem(storageKey) || '[]');
-    const posts = stored.length ? stored : defaultPosts;
-    if (!stored.length) {
-      localStorage.setItem(storageKey, JSON.stringify(posts));
+  async function loadPosts() {
+    const container = document.getElementById('news-posts');
+    const recentLinks = document.getElementById('recent-links');
+
+    try {
+      // Hämta lista på filer från GitHub API
+      const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${POSTS_PATH}`;
+      const res = await fetch(apiUrl);
+      if (!res.ok) throw new Error('Kunde inte hämta inlägg');
+      const files = await res.json();
+
+      // Hämta innehållet i varje fil
+      const posts = await Promise.all(
+        files
+          .filter(f => f.name.endsWith('.md'))
+          .map(async f => {
+            const fileRes = await fetch(f.download_url);
+            const text = await fileRes.text();
+            return { ...parseFrontmatter(text), slug: f.name };
+          })
+      );
+
+      // Sortera nyast först
+      posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      if (posts.length === 0) {
+        container.innerHTML = '<p>Inga inlägg ännu.</p>';
+        return;
+      }
+
+      container.innerHTML = '';
+      recentLinks.innerHTML = '';
+
+      posts.forEach((post, i) => {
+        const id = `post-${i}`;
+        const article = document.createElement('article');
+        article.className = 'post';
+        article.id = id;
+        article.innerHTML = `
+          <time datetime="${post.date}">${formatSwedishDate(post.date)}</time>
+          <h3>${post.title}</h3>
+          <div>${simpleMarkdown(post.body)}</div>
+        `;
+        container.appendChild(article);
+
+        const link = document.createElement('a');
+        link.href = `#${id}`;
+        link.textContent = post.title;
+        recentLinks.appendChild(link);
+      });
+
+    } catch (err) {
+      container.innerHTML = `<p class="error">Kunde inte ladda inlägg. Försök igen senare.</p>`;
+      console.error(err);
     }
+  }
 
-    newsPosts.innerHTML = '';
-    recentLinks.innerHTML = '';
+  document.addEventListener('DOMContentLoaded', loadPosts);
+</script>
 
-    const sortedPosts = posts.slice().reverse();
-    const recentPosts = sortedPosts.slice(0, 5);
-
-    recentPosts.forEach(post => {
-      newsPosts.appendChild(createPostElement(post));
-      const link = document.createElement('a');
-      link.href = `#post-${post.id}`;
-      link.textContent = post.title;
-      recentLinks.appendChild(link);
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/index.html";
+        });
+      }
     });
   }
-
-  document.addEventListener('DOMContentLoaded', loadSavedPosts);
 </script>
+
 </body>
 </html>
