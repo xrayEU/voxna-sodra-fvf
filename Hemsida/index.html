@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Voxna Södra Fiskevårdsförening</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:     #1a1a1a;
+      --accent:   #3a7a4a;
+      --link:     #2a5fa0;
+      --text:     #333;
+      --light-bg: #f0f0ee;
+      --border:   #ccc;
+      --white:    #fff;
+    }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 15px;
+      background: var(--light-bg);
+      color: var(--text);
+    }
+
+    #wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--white);
+      box-shadow: 0 0 12px rgba(0,0,0,.15);
+    }
+
+    /* HEADER */
+    #header {
+      display: none;
+    }
+
+    /* HERO */
+    #hero {
+      width: 100vw;
+      height: min(454px, 40vh);
+      max-height: 40vh;
+      overflow: hidden;
+      margin-left: calc(-50vw + 50%);
+      margin-right: calc(-50vw + 50%);
+      position: relative;
+    }
+    #hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 60%;
+      display: block;
+    }
+    #hero .fallback {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(160deg, #2d5a3d 0%, #4a8a5a 40%, #7ab87a 70%, #a8d4a8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hero .fallback span {
+      color: rgba(255,255,255,0.35);
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* NAV */
+    nav {
+      background: #2b2b2b;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      margin-right: calc(-50vw + 50%);
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      padding: 0 16px;
+    }
+    nav ul li {
+      display: flex;
+      align-items: center;
+    }
+    nav ul li + li::before {
+      content: "/";
+      color: #666;
+      padding: 0 4px;
+      font-size: 0.85rem;
+    }
+    nav ul li a {
+      display: block;
+      padding: 14px 12px;
+      color: #bbb;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color .15s;
+    }
+    nav ul li a:hover { color: #fff; }
+    nav ul li a.active {
+      color: #fff;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    nav ul li a.has-dropdown::after {
+      content: " ▾";
+      font-size: 0.7rem;
+    }
+
+    /* CONTENT */
+    #content-area {
+      display: flex;
+      padding: 24px;
+      align-items: flex-start;
+    }
+    #main {
+      flex: 1;
+      padding-right: 28px;
+    }
+    #main h2 {
+      font-family: 'Merriweather', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--dark);
+    }
+    #main p {
+      line-height: 1.7;
+      color: #444;
+    }
+
+    /* SIDEBAR */
+    #sidebar {
+      width: 190px;
+      flex-shrink: 0;
+      font-size: 0.88rem;
+    }
+    .sidebar-section { margin-bottom: 20px; }
+    .sidebar-section h3 {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #555;
+      margin-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 3px;
+    }
+    .sidebar-section a {
+      display: block;
+      color: var(--link);
+      text-decoration: none;
+      padding: 2px 0;
+    }
+    .sidebar-section a:hover { text-decoration: underline; }
+    .sidebar-section a::before { content: "• "; color: var(--accent); }
+
+    .search-box {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 16px;
+    }
+    .search-box input {
+      flex: 1;
+      padding: 5px 7px;
+      border: 1px solid var(--border);
+      font-size: 0.85rem;
+      outline: none;
+    }
+    .search-box input:focus { border-color: var(--accent); }
+    .search-box button {
+      padding: 5px 10px;
+      background: #eee;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .search-box button:hover { background: #ddd; }
+
+    /* FOOTER */
+    #footer {
+      border-top: 2px solid var(--dark);
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: #555;
+    }
+    #footer a { color: #555; font-style: italic; }
+
+    @media (max-width: 600px) {
+      #content-area { flex-direction: column; padding: 16px; }
+      #main { padding-right: 0; margin-bottom: 20px; }
+      #sidebar { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="wrapper">
+
+  <div id="header">
+    <div class="header-top">
+      <h1>Voxna Södra Fiskevårdsförening</h1>
+    </div>
+  </div>
+<div id="hero">
+  <img src="bilder/hero.png" alt="Voxna Södra Fiskevårdsförening" />
+</div>
+
+  <nav>
+    <ul>
+      <li><a href="index.html" class="active">Hem</a></li>
+      <li><a href="inlagg.html">Inlägg</a></li>
+      <li><a href="regler.html">Regler</a></li>
+      <li><a href="fiskekort.html">Fiskekort</a></li>
+      <li><a href="karta.html">Karta</a></li>
+    </ul>
+  </nav>
+
+  <div id="content-area">
+
+    <div id="main">
+      <h2>Välkommen till Voxna Södra Fiskevårdsförening</h2>
+      <p>
+        Voxna Södra Fiskevårdsförening förvaltar och vårdar fiskevatten i den natursköna Voxnadalen
+        i västra Hälsingland. Hos oss hittar du lugna sjöar, strömmande åar och en fiskeupplevelse
+        i en av Sveriges vackraste inlandsmiljöer.
+      </p>
+      <br/>
+      <p>
+        Våra vatten håller fina bestånd av gädda, abborre, öring och harr. Voxnan bjuder på ett otroligt varierat fiske - här kan du flugfiska efter öring och harr i strömmarna, men också kasta efter grov gädda och abborre i de lugnare partierna.
+        Vill du hellre hitta lugnet vid en skogstjärn har vi dessutom flera sjöar med jättefint gädd- och abborrfiske.
+      </p>
+      <br/>
+      <p>
+        Vi erbjuder även <strong>put &amp; take-fiske</strong> med regelbunden isättning av
+        <strong>röding, öring och regnbåge</strong> — perfekt för hela familjen eller den som
+        vill ha en garanterat spännande dag vid vattnet!
+      </p>
+      <br/>
+      <p>
+        Fiskekort köps via <strong>Swish</strong> eller hos återförsäljare. Information om fiske
+        och fiskekort finns även på plats vid vattnen eller hos Voxna Livs.
+      </p>
+      <br/>
+      <p>
+        Vi ber alla fiskare att följa gällande regler för att tillsammans värna om våra fina
+        fiskebestånd för framtida generationer.
+      </p>
+      <br/>
+      <p><strong>Välkommen ut på vattnet!</strong></p>
+    </div>
+
+    <div id="sidebar">
+      
+      <div class="sidebar-section">
+        <h3>Senaste inläggen</h3>
+        <div id="index-recent-links"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="footer">
+    <span>Voxna Södra Fiskevårdsförening</span>
+  
+  </div>
+
+</div>
+
+  <script>
+    const storageKey = 'voxnaNewsPosts';
+    const indexRecentLinks = document.getElementById('index-recent-links');
+
+    const defaultPosts = [
+      { id: 'default-1', date: '2026-05-01', title: 'Ny fiskerestriktion vid Finnstugaströmmen' },
+      { id: 'default-2', date: '2026-04-15', title: 'Vårstäddagen vid Voxnaån' },
+      { id: 'default-3', date: '2026-03-30', title: 'Ny återförsäljare för fiskekort' }
+    ];
+
+    function loadIndexNews() {
+      const stored = JSON.parse(localStorage.getItem(storageKey) || '[]');
+      const posts = stored.length ? stored : defaultPosts;
+      if (!stored.length) {
+        localStorage.setItem(storageKey, JSON.stringify(posts));
+      }
+      indexRecentLinks.innerHTML = '';
+      
+      const sortedPosts = posts.slice().reverse();
+      const recentPosts = sortedPosts.slice(0, 5);
+      
+      recentPosts.forEach(post => {
+        const link = document.createElement('a');
+        link.href = `inlagg.html#post-${post.id}`;
+        link.textContent = post.title;
+        indexRecentLinks.appendChild(link);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', loadIndexNews);
+  </script>
+
+</body>
+</html>
+
+
+

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin - Nyhetshantering</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:     #1a1a1a;
+      --accent:   #3a7a4a;
+      --link:     #2a5fa0;
+      --text:     #333;
+      --light-bg: #f0f0ee;
+      --border:   #ccc;
+      --white:    #fff;
+    }
+
+    body {
+      overflow-y: scroll;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 15px;
+      background: var(--light-bg);
+      color: var(--text);
+    }
+
+    #wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--white);
+      box-shadow: 0 0 12px rgba(0,0,0,.15);
+    }
+
+    #header {
+      padding: 20px 24px 10px;
+      background: var(--white);
+    }
+    #header h1 {
+      font-family: 'Merriweather', serif;
+      font-size: 1.9rem;
+      color: var(--dark);
+      font-weight: 700;
+    }
+    #header .tagline {
+      font-style: italic;
+      color: #888;
+      font-size: 0.9rem;
+      margin-top: 2px;
+      text-align: right;
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    #hero {
+      width: 100vw;
+      height: min(454px, 40vh);
+      max-height: 40vh;
+      overflow: hidden;
+      background: linear-gradient(160deg, #2d5a3d 0%, #4a8a5a 40%, #7ab87a 70%, #a8d4a8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-family: 'Merriweather', serif;
+      font-size: 1.8rem;
+      text-align: center;
+      padding: 0 18px;
+    }
+
+    nav {
+      background: #2b2b2b;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      padding: 0 16px;
+    }
+    nav ul li {
+      display: flex;
+      align-items: center;
+    }
+    nav ul li + li::before {
+      content: "/";
+      color: #666;
+      padding: 0 4px;
+      font-size: 0.85rem;
+    }
+    nav ul li a {
+      display: block;
+      padding: 14px 12px;
+      color: #bbb;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color .15s;
+    }
+    nav ul li a:hover { color: #fff; }
+    nav ul li a.active {
+      color: #fff;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    #content-area {
+      display: flex;
+      padding: 24px;
+      align-items: flex-start;
+    }
+    #main {
+      flex: 1;
+      padding-right: 28px;
+    }
+    #main h2 {
+      font-family: 'Merriweather', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--dark);
+    }
+    #main p {
+      line-height: 1.7;
+      color: #444;
+      margin-bottom: 16px;
+    }
+
+    .news-form {
+      margin-bottom: 28px;
+      padding: 18px;
+      background: #f8f8f6;
+      border: 1px solid #e0e0dc;
+      border-radius: 6px;
+    }
+    .news-form h3 {
+      font-family: 'Merriweather', serif;
+      font-size: 1.05rem;
+      margin-bottom: 14px;
+      color: var(--dark);
+    }
+    .news-form .form-row {
+      margin-bottom: 12px;
+    }
+    .news-form label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.88rem;
+      color: #555;
+    }
+    .news-form input,
+    .news-form textarea {
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px 12px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: #333;
+      background: #fff;
+    }
+    .news-form textarea {
+      resize: vertical;
+    }
+    .news-form button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 11px 18px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background .15s ease;
+    }
+    .news-form button:hover {
+      background: #2f6c45;
+    }
+    .news-message {
+      margin-top: 10px;
+      color: #336633;
+      font-size: 0.9rem;
+    }
+    .news-form img.preview {
+      display: none;
+      max-width: 100%;
+      margin-top: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    .post-card {
+      border: 1px solid #e2e2e2;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 18px;
+      background: #fff;
+    }
+    .post-card h3 {
+      margin-bottom: 8px;
+      color: var(--dark);
+    }
+    .post-card time {
+      display: block;
+      margin-bottom: 12px;
+      color: #777;
+    }
+    .post-card p {
+      line-height: 1.7;
+      color: #444;
+    }
+    .post-card img {
+      max-width: 100%;
+      display: block;
+      margin: 14px 0;
+      border-radius: 6px;
+    }
+    .post-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .post-actions button {
+      border: none;
+      border-radius: 4px;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .post-actions button.edit {
+      background: #2b75a9;
+      color: #fff;
+    }
+    .post-actions button.delete {
+      background: #c34a36;
+      color: #fff;
+    }
+
+    #sidebar {
+      width: 190px;
+      flex-shrink: 0;
+      font-size: 0.88rem;
+    }
+    .sidebar-section { margin-bottom: 20px; }
+    .sidebar-section h3 {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #555;
+      margin-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 3px;
+    }
+    .sidebar-section p {
+      line-height: 1.6;
+      color: #555;
+      font-size: 0.85rem;
+    }
+    .sidebar-section a {
+      display: block;
+      color: var(--link);
+      text-decoration: none;
+      padding: 2px 0;
+    }
+    .sidebar-section a:hover { text-decoration: underline; }
+    .sidebar-section a::before { content: "• "; color: var(--accent); }
+
+    #footer {
+      border-top: 2px solid var(--dark);
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: #555;
+    }
+
+    @media (max-width: 600px) {
+      #content-area { flex-direction: column; padding: 16px; }
+      #main { padding-right: 0; margin-bottom: 20px; }
+      #sidebar { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="wrapper">
+  <div id="header">
+    <div class="header-top">
+      <h1>Voxna Södra Fiskevårdsförening</h1>
+      <p class="tagline">Admin: nyhetshantering</p>
+    </div>
+  </div>
+  <div id="hero">Administrativ sida - inte länkad i offentlig navigering</div>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Hem</a></li>
+      <li><a href="inlagg.html">Inlägg</a></li>
+      <li><a href="admin.html" class="active">Admin</a></li>
+    </ul>
+  </nav>
+
+  <div id="content-area">
+    <div id="main">
+      <h2>Hantera nyhetsinlägg</h2>
+      <p>Här kan du lägga till, redigera och ta bort nyheter som visas på sidan <strong>Inlägg</strong>. Sidan använder webbläsarens lagring, så den fungerar direkt i din browser.</p>
+
+      <section class="news-form">
+        <h3>Lägg till eller redigera nyhet</h3>
+        <form id="admin-news-form">
+          <div class="form-row">
+            <label for="admin-news-title">Rubrik</label>
+            <input type="text" id="admin-news-title" name="adminNewsTitle" required placeholder="Skriv rubrik" />
+          </div>
+          <div class="form-row">
+            <label for="admin-news-date">Datum</label>
+            <input type="date" id="admin-news-date" name="adminNewsDate" required />
+          </div>
+          <div class="form-row">
+            <label for="admin-news-content">Innehåll</label>
+            <textarea id="admin-news-content" name="adminNewsContent" rows="4" required placeholder="Skriv nyhetsinnehåll"></textarea>
+          </div>
+          <div class="form-row">
+            <label for="admin-news-image">Bild (valfritt)</label>
+            <input type="file" id="admin-news-image" name="adminNewsImage" accept="image/*" />
+            <img id="admin-news-image-preview" class="preview" alt="Förhandsvisning av bilduppladdning" />
+          </div>
+          <button type="submit">Spara nyhet</button>
+          <p id="admin-news-message" class="news-message" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <div id="manage-posts"></div>
+    </div>
+
+    <div id="sidebar">
+      <div class="sidebar-section">
+        <h3>Admin-notis</h3>
+        <p>Denna sida är avsedd för redaktörer. Den visas inte som en normal vy på webbplatsen.</p>
+      </div>
+      <div class="sidebar-section">
+        <h3>Snabblänk</h3>
+        <a href="inlagg.html">Visa nyhetssidan</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer">
+    <span>Voxna Södra Fiskevårdsförening</span>
+  </div>
+</div>
+
+<script>
+  const storageKey = 'voxnaNewsPosts';
+  const adminForm = document.getElementById('admin-news-form');
+  const managePosts = document.getElementById('manage-posts');
+  const adminMessage = document.getElementById('admin-news-message');
+  const adminImageInput = document.getElementById('admin-news-image');
+  const adminImagePreview = document.getElementById('admin-news-image-preview');
+
+  let editingId = null;
+
+  function formatSwedishDate(value) {
+    const date = new Date(value);
+    return date.toLocaleDateString('sv-SE', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  function getStoredPosts() {
+    return JSON.parse(localStorage.getItem(storageKey) || '[]');
+  }
+
+  function savePosts(posts) {
+    localStorage.setItem(storageKey, JSON.stringify(posts));
+  }
+
+  function renderPosts() {
+    const posts = getStoredPosts();
+    managePosts.innerHTML = '';
+    if (!posts.length) {
+      managePosts.innerHTML = '<p>Inga nyheter sparade ännu.</p>';
+      return;
+    }
+
+    posts.slice().reverse().forEach(post => {
+      const card = document.createElement('div');
+      card.className = 'post-card';
+
+      const title = document.createElement('h3');
+      title.textContent = post.title;
+      card.appendChild(title);
+
+      const time = document.createElement('time');
+      time.dateTime = post.date;
+      time.textContent = formatSwedishDate(post.date);
+      card.appendChild(time);
+
+      if (post.image) {
+        const img = document.createElement('img');
+        img.src = post.image;
+        img.alt = post.title;
+        card.appendChild(img);
+      }
+
+      const paragraph = document.createElement('p');
+      paragraph.textContent = post.content;
+      card.appendChild(paragraph);
+
+      const actions = document.createElement('div');
+      actions.className = 'post-actions';
+
+      const editButton = document.createElement('button');
+      editButton.type = 'button';
+      editButton.className = 'edit';
+      editButton.textContent = 'Redigera';
+      editButton.addEventListener('click', () => startEditPost(post.id));
+
+      const deleteButton = document.createElement('button');
+      deleteButton.type = 'button';
+      deleteButton.className = 'delete';
+      deleteButton.textContent = 'Ta bort';
+      deleteButton.addEventListener('click', () => deletePost(post.id));
+
+      actions.appendChild(editButton);
+      actions.appendChild(deleteButton);
+      card.appendChild(actions);
+      managePosts.appendChild(card);
+    });
+  }
+
+  function previewAdminImage(file) {
+    if (!file) {
+      adminImagePreview.style.display = 'none';
+      adminImagePreview.src = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      adminImagePreview.src = reader.result;
+      adminImagePreview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function getImageDataURL(file) {
+    return new Promise(resolve => {
+      if (!file) {
+        resolve('');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function startEditPost(id) {
+    const posts = getStoredPosts();
+    const post = posts.find(item => item.id === id);
+    if (!post) return;
+
+    editingId = id;
+    document.getElementById('admin-news-title').value = post.title;
+    document.getElementById('admin-news-date').value = post.date;
+    document.getElementById('admin-news-content').value = post.content;
+    if (post.image) {
+      adminImagePreview.src = post.image;
+      adminImagePreview.style.display = 'block';
+    } else {
+      adminImagePreview.style.display = 'none';
+      adminImagePreview.src = '';
+    }
+    adminMessage.textContent = 'Redigerar post. Klicka "Spara nyhet" för att uppdatera.';
+  }
+
+  function deletePost(id) {
+    const posts = getStoredPosts();
+    const remaining = posts.filter(post => post.id !== id);
+    savePosts(remaining);
+    if (editingId === id) {
+      adminForm.reset();
+      editingId = null;
+      adminImagePreview.style.display = 'none';
+      adminImagePreview.src = '';
+      adminMessage.textContent = 'Redigering avbröts eftersom posten togs bort.';
+    }
+    renderPosts();
+  }
+
+  adminImageInput.addEventListener('change', () => {
+    previewAdminImage(adminImageInput.files[0]);
+  });
+
+  adminForm.addEventListener('submit', async event => {
+    event.preventDefault();
+    const title = document.getElementById('admin-news-title').value.trim();
+    const date = document.getElementById('admin-news-date').value;
+    const content = document.getElementById('admin-news-content').value.trim();
+    const image = await getImageDataURL(adminImageInput.files[0]);
+
+    if (!title || !date || !content) {
+      adminMessage.textContent = 'Fyll i alla fält innan du sparar.';
+      return;
+    }
+
+    const posts = getStoredPosts();
+    if (editingId) {
+      const updated = posts.map(post => post.id === editingId ? { ...post, title, date, content, image: image || post.image } : post);
+      savePosts(updated);
+      adminMessage.textContent = 'Nyheten uppdaterades.';
+    } else {
+      posts.push({ id: Date.now().toString(), title, date, content, image });
+      savePosts(posts);
+      adminMessage.textContent = 'Nyheten sparades.';
+    }
+
+    adminForm.reset();
+    editingId = null;
+    adminImagePreview.style.display = 'none';
+    adminImagePreview.src = '';
+    renderPosts();
+    setTimeout(() => { adminMessage.textContent = ''; }, 3000);
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const dateInput = document.getElementById('admin-news-date');
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.value = today;
+    renderPosts();
+  });
+</script>
+</body>
+</html>
