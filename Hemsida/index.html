@@ -203,6 +203,7 @@
       #sidebar { width: 100%; }
     }
   </style>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 
@@ -309,7 +310,17 @@
 
     document.addEventListener('DOMContentLoaded', loadIndexNews);
   </script>
-
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/index.html";
+        });
+      }
+    });
+  }
+</script>
 </body>
 </html>
 
