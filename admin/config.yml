@@ -2,13 +2,13 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: Hemsida/bilder
+media_folder: bilder
 public_folder: /bilder
 
 collections:
   - name: inlagg
     label: Inlägg
-    folder: Hemsida/inlagg
+    folder: inlagg
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
