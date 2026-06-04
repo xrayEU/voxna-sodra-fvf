@@ -280,36 +280,50 @@
 </div>
 
   <script>
-    const storageKey = 'voxnaNewsPosts';
-    const indexRecentLinks = document.getElementById('index-recent-links');
+  const GITHUB_USER = 'xrayEU';
+  const GITHUB_REPO = 'voxna-sodra-fvf';
+  const POSTS_PATH = 'Hemsida/inlagg';
 
-    const defaultPosts = [
-      { id: 'default-1', date: '2026-05-01', title: 'Ny fiskerestriktion vid Finnstugaströmmen' },
-      { id: 'default-2', date: '2026-04-15', title: 'Vårstäddagen vid Voxnaån' },
-      { id: 'default-3', date: '2026-03-30', title: 'Ny återförsäljare för fiskekort' }
-    ];
+  async function loadIndexNews() {
+    const container = document.getElementById('index-recent-links');
+    try {
+      const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${POSTS_PATH}`);
+      if (!res.ok) throw new Error();
+      const files = await res.json();
 
-    function loadIndexNews() {
-      const stored = JSON.parse(localStorage.getItem(storageKey) || '[]');
-      const posts = stored.length ? stored : defaultPosts;
-      if (!stored.length) {
-        localStorage.setItem(storageKey, JSON.stringify(posts));
-      }
-      indexRecentLinks.innerHTML = '';
-      
-      const sortedPosts = posts.slice().reverse();
-      const recentPosts = sortedPosts.slice(0, 5);
-      
-      recentPosts.forEach(post => {
+      const posts = await Promise.all(
+        files
+          .filter(f => f.name.endsWith('.md'))
+          .map(async f => {
+            const fileRes = await fetch(f.download_url);
+            const text = await fileRes.text();
+            const titleMatch = text.match(/title:\s*(.+)/);
+            const dateMatch = text.match(/date:\s*(.+)/);
+            return {
+              title: titleMatch ? titleMatch[1].replace(/^"|"$/g, '').trim() : f.name,
+              date: dateMatch ? dateMatch[1].trim() : '',
+              slug: f.name
+            };
+          })
+      );
+
+      posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+      container.innerHTML = '';
+
+      posts.slice(0, 5).forEach((post, i) => {
         const link = document.createElement('a');
-        link.href = `inlagg.html#post-${post.id}`;
+        link.href = `inlagg.html#post-${i}`;
         link.textContent = post.title;
-        indexRecentLinks.appendChild(link);
+        container.appendChild(link);
       });
-    }
 
-    document.addEventListener('DOMContentLoaded', loadIndexNews);
-  </script>
+    } catch (err) {
+      container.innerHTML = '<span style="color:#999;font-size:0.85rem;">Kunde inte ladda inlägg</span>';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', loadIndexNews);
+</script>
 <script>
   if (window.netlifyIdentity) {
     window.netlifyIdentity.on("init", user => {
