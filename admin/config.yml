@@ -2,19 +2,6 @@ backend:
   name: github
   repo: xrayEU/voxna-sodra-fvf
   branch: main
-  auth_type: implicit
-  app_id: 0v23liWC6lD5J26f7AJf
-
-media_folder: bilder
-public_folder: /bilder
-
-collections:
-  - name: inlagg
-    label: Inlägg
-    folder: inlagg
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - { label: Titel, name: title, widget: string }
-      - { label: Datum, name: date, widget: datetime }
-      - { label: Innehåll, name: body, widget: markdown }
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
+  site_domain: scintillating-haupia-c37fc4.netlify.app
