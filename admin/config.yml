@@ -6,3 +6,17 @@ backend:
   auth_endpoint: auth
   site_domain: scintillating-haupia-c37fc4.netlify.app
   site_id: 9ddb264a-4ed8-440e-afea-ff7be48d7780
+
+media_folder: bilder
+public_folder: /bilder
+
+collections:
+  - name: inlagg
+    label: Inlägg
+    folder: inlagg
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: Titel, name: title, widget: string }
+      - { label: Datum, name: date, widget: datetime }
+      - { label: Innehåll, name: body, widget: markdown }
