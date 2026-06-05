@@ -4,7 +4,7 @@ backend:
   branch: main
   base_url: https://api.netlify.com
   auth_endpoint: auth
-  site_domain: 9ddb264a-4ed8-440e-afea-ff7be48d7780.netlify.app
+  site_domain: scintillating-haupia-c37fc4.netlify.app
 
 media_folder: bilder
 public_folder: /bilder
