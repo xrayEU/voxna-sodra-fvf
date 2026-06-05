@@ -2,8 +2,9 @@ backend:
   name: github
   repo: xrayEU/voxna-sodra-fvf
   branch: main
-  auth_type: pkce
-  app_id: Ov23liWC6lD5J26f7AJf
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
+  site_domain: scintillating-haupia-c37fc4.netlify.app
 
 media_folder: bilder
 public_folder: /bilder
