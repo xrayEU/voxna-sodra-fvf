@@ -1,11 +1,454 @@
 <!DOCTYPE html>
-<html>
+<html lang="sv">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin – Voxna Södra FVF</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #3a7a4a;
+      --green-light: #f4faf0;
+      --green-border: #73b239;
+      --dark: #1a1a1a;
+      --text: #333;
+      --bg: #f0f0ee;
+      --white: #fff;
+      --border: #ddd;
+      --error: #c0392b;
+      --success: #27ae60;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+      padding: 2rem;
+      width: 100%;
+      max-width: 680px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--bg);
+    }
+
+    .card-header .logo {
+      width: 40px;
+      height: 40px;
+      background: var(--green);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-header h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .card-header p {
+      font-size: 0.8rem;
+      color: #888;
+    }
+
+    /* LOGIN */
+    #login-view label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 6px;
+    }
+
+    #login-view input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      outline: none;
+      margin-bottom: 12px;
+    }
+
+    #login-view input:focus { border-color: var(--green); }
+
+    .hint {
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .hint a { color: var(--green); }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn-primary { background: var(--green); color: #fff; width: 100%; text-align: center; }
+    .btn-secondary { background: var(--bg); color: var(--dark); border: 1px solid var(--border); }
+    .btn-danger { background: #fdf0f0; color: var(--error); border: 1px solid #f5c6c6; }
+    .btn-sm { padding: 6px 12px; font-size: 0.82rem; }
+
+    /* EDITOR */
+    #editor-view { display: none; }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .toolbar-left { display: flex; align-items: center; gap: 8px; }
+
+    .field { margin-bottom: 1rem; }
+    .field label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 5px;
+    }
+    .field input, .field textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.92rem;
+      outline: none;
+      font-family: inherit;
+    }
+    .field input:focus, .field textarea:focus { border-color: var(--green); }
+    .field textarea { min-height: 200px; resize: vertical; line-height: 1.6; }
+
+    .status {
+      font-size: 0.82rem;
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .status.error { background: #fdf0f0; color: var(--error); border: 1px solid #f5c6c6; display: block; }
+    .status.success { background: #f0faf4; color: var(--success); border: 1px solid #a8ddb8; display: block; }
+
+    /* POST LIST */
+    #posts-view { display: none; }
+    .posts-list { margin-top: 1rem; }
+    .post-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+    .post-item-title { font-size: 0.9rem; font-weight: 600; color: var(--dark); }
+    .post-item-date { font-size: 0.78rem; color: #888; }
+    .post-item-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+    .logout-btn {
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 0.8rem;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+    .logout-btn:hover { background: var(--bg); }
+
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--bg);
+      padding-bottom: 0;
+    }
+    .tab {
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: #888;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+    }
+    .tab.active { color: var(--green); border-bottom-color: var(--green); }
+  </style>
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+<div class="card">
+  <div class="card-header">
+    <div class="logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+      </svg>
+    </div>
+    <div>
+      <h1>Voxna Södra FVF – Admin</h1>
+      <p id="user-info">Inte inloggad</p>
+    </div>
+    <button class="logout-btn" id="logout-btn" style="display:none;margin-left:auto;" onclick="logout()">Logga ut</button>
+  </div>
+
+  <!-- LOGIN -->
+  <div id="login-view">
+    <label for="token-input">GitHub Personal Access Token</label>
+    <input type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
+    <p class="hint">
+      Skapa ett token på <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a> → 
+      Generate new token (classic) → kryssa i <strong>repo</strong> → kopiera token.
+    </p>
+    <div id="login-status" class="status"></div>
+    <button class="btn btn-primary" onclick="login()">Logga in</button>
+  </div>
+
+  <!-- INLOGGAD -->
+  <div id="editor-view">
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('new')">✏️ Nytt inlägg</button>
+      <button class="tab" onclick="showTab('list')">📋 Mina inlägg</button>
+    </div>
+
+    <!-- NY POST -->
+    <div id="tab-new">
+      <div class="field">
+        <label>Rubrik</label>
+        <input type="text" id="post-title" placeholder="Skriv en rubrik..." />
+      </div>
+      <div class="field">
+        <label>Datum</label>
+        <input type="date" id="post-date" />
+      </div>
+      <div class="field">
+        <label>Innehåll</label>
+        <textarea id="post-body" placeholder="Skriv inlägget här..."></textarea>
+      </div>
+      <div id="save-status" class="status"></div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-primary" onclick="savePost()" id="save-btn">Publicera inlägg</button>
+      </div>
+    </div>
+
+    <!-- LISTA -->
+    <div id="tab-list" style="display:none;">
+      <div id="posts-list-container">
+        <p style="color:#888;font-size:0.9rem;">Laddar inlägg...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const GITHUB_USER = 'xrayEU';
+  const GITHUB_REPO = 'voxna-sodra-fvf';
+  const POSTS_PATH = 'inlagg';
+  const BRANCH = 'main';
+
+  let token = localStorage.getItem('voxna_admin_token') || '';
+
+  // Sätt datum till idag
+  document.getElementById('post-date').value = new Date().toISOString().split('T')[0];
+
+  if (token) tryAutoLogin();
+
+  async function tryAutoLogin() {
+    const ok = await verifyToken(token);
+    if (ok) showEditor();
+    else { token = ''; localStorage.removeItem('voxna_admin_token'); }
+  }
+
+  async function verifyToken(t) {
+    const res = await fetch('https://api.github.com/user', {
+      headers: { Authorization: `token ${t}` }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      document.getElementById('user-info').textContent = `Inloggad som ${data.login}`;
+      return true;
+    }
+    return false;
+  }
+
+  async function login() {
+    const input = document.getElementById('token-input').value.trim();
+    const status = document.getElementById('login-status');
+    if (!input) { showStatus(status, 'Ange ett token.', 'error'); return; }
+
+    showStatus(status, 'Verifierar...', 'success');
+    const ok = await verifyToken(input);
+    if (ok) {
+      token = input;
+      localStorage.setItem('voxna_admin_token', token);
+      showEditor();
+    } else {
+      showStatus(status, 'Ogiltigt token. Kontrollera att det har repo-behörighet.', 'error');
+    }
+  }
+
+  function showEditor() {
+    document.getElementById('login-view').style.display = 'none';
+    document.getElementById('editor-view').style.display = 'block';
+    document.getElementById('logout-btn').style.display = 'block';
+  }
+
+  function logout() {
+    token = '';
+    localStorage.removeItem('voxna_admin_token');
+    document.getElementById('login-view').style.display = 'block';
+    document.getElementById('editor-view').style.display = 'none';
+    document.getElementById('logout-btn').style.display = 'none';
+    document.getElementById('user-info').textContent = 'Inte inloggad';
+    document.getElementById('token-input').value = '';
+  }
+
+  function showTab(tab) {
+    document.getElementById('tab-new').style.display = tab === 'new' ? 'block' : 'none';
+    document.getElementById('tab-list').style.display = tab === 'list' ? 'block' : 'none';
+    document.querySelectorAll('.tab').forEach((t, i) => {
+      t.classList.toggle('active', (tab === 'new' && i === 0) || (tab === 'list' && i === 1));
+    });
+    if (tab === 'list') loadPosts();
+  }
+
+  async function savePost() {
+    const title = document.getElementById('post-title').value.trim();
+    const date = document.getElementById('post-date').value;
+    const body = document.getElementById('post-body').value.trim();
+    const status = document.getElementById('save-status');
+    const btn = document.getElementById('save-btn');
+
+    if (!title || !body) { showStatus(status, 'Fyll i rubrik och innehåll.', 'error'); return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Publicerar...';
+
+    const slug = title.toLowerCase()
+      .replace(/å/g,'a').replace(/ä/g,'a').replace(/ö/g,'o')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+    const filename = `${date}-${slug}.md`;
+    const content = `---\ntitle: "${title}"\ndate: "${date}"\n---\n\n${body}`;
+    const encoded = btoa(unescape(encodeURIComponent(content)));
+
+    const path = `${POSTS_PATH}/${filename}`;
+    const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${path}`;
+
+    const res = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: {
+        Authorization: `token ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: `Nytt inlägg: ${title}`,
+        content: encoded,
+        branch: BRANCH,
+      }),
+    });
+
+    btn.disabled = false;
+    btn.textContent = 'Publicera inlägg';
+
+    if (res.ok) {
+      showStatus(status, '✅ Inlägget publicerades!', 'success');
+      document.getElementById('post-title').value = '';
+      document.getElementById('post-body').value = '';
+      document.getElementById('post-date').value = new Date().toISOString().split('T')[0];
+    } else {
+      const err = await res.json();
+      showStatus(status, `Fel: ${err.message}`, 'error');
+    }
+  }
+
+  async function loadPosts() {
+    const container = document.getElementById('posts-list-container');
+    container.innerHTML = '<p style="color:#888;font-size:0.9rem;">Laddar...</p>';
+
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${POSTS_PATH}`, {
+      headers: { Authorization: `token ${token}` }
+    });
+
+    if (!res.ok) { container.innerHTML = '<p style="color:red;">Kunde inte ladda inlägg.</p>'; return; }
+
+    const files = await res.json();
+    const posts = files.filter(f => f.name.endsWith('.md'));
+
+    if (posts.length === 0) { container.innerHTML = '<p style="color:#888;">Inga inlägg ännu.</p>'; return; }
+
+    container.innerHTML = posts.reverse().map(f => `
+      <div class="post-item">
+        <div>
+          <div class="post-item-title">${f.name.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace('.md', '').replace(/-/g, ' ')}</div>
+          <div class="post-item-date">${f.name.substring(0, 10)}</div>
+        </div>
+        <div class="post-item-actions">
+          <button class="btn btn-danger btn-sm" onclick="deletePost('${f.path}', '${f.sha}', '${f.name}')">Ta bort</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  async function deletePost(path, sha, name) {
+    if (!confirm(`Ta bort "${name}"?`)) return;
+
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${path}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `token ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: `Ta bort inlägg: ${name}`,
+        sha,
+        branch: BRANCH,
+      }),
+    });
+
+    if (res.ok) loadPosts();
+    else alert('Kunde inte ta bort inlägget.');
+  }
+
+  function showStatus(el, msg, type) {
+    el.textContent = msg;
+    el.className = `status ${type}`;
+  }
+</script>
+
 </body>
 </html>
