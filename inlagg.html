@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="sv">
 <head>
   <meta charset="UTF-8" />
@@ -84,61 +84,113 @@
     nav ul li a.active { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
 
     #content-area {
-      display: flex;
       padding: 24px;
-      align-items: flex-start;
     }
-    #main {
-      flex: 1;
-      padding-right: 28px;
-    }
+
     #main h2 {
       font-family: 'Merriweather', serif;
       font-size: 1.25rem;
       font-weight: 700;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       color: var(--dark);
     }
 
-    .post {
-      margin-bottom: 28px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid #e8e8e8;
+    /* ACCORDION */
+    .year-group {
+      margin-bottom: 10px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
     }
-    .post:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-    .post time { display: block; font-size: 0.85rem; color: #777; margin-bottom: 10px; }
+
+    .year-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: var(--dark);
+      color: #fff;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .year-header:hover { background: #2e2e2e; }
+    .year-header.open { background: var(--accent); }
+
+    .year-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .year-label {
+      font-family: 'Merriweather', serif;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .year-count {
+      font-size: 0.78rem;
+      background: rgba(255,255,255,0.2);
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+
+    .year-arrow {
+      font-size: 0.8rem;
+      transition: transform 0.2s;
+    }
+    .year-header.open .year-arrow {
+      transform: rotate(180deg);
+    }
+
+    .year-posts {
+      display: none;
+      background: var(--white);
+    }
+    .year-posts.open {
+      display: block;
+    }
+
+    /* POSTS */
+    .post {
+      padding: 18px 20px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .post:last-child { border-bottom: none; }
+
+    .post time {
+      display: block;
+      font-size: 0.82rem;
+      color: #888;
+      margin-bottom: 5px;
+    }
     .post h3 {
       font-family: 'Merriweather', serif;
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 700;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       color: var(--dark);
     }
-    .post p { line-height: 1.7; color: #444; margin-bottom: 8px; }
+    .post-preview { line-height: 1.7; color: #555; font-size: 0.92rem; margin-bottom: 8px; }
+    .post-full { display: none; line-height: 1.7; color: #444; font-size: 0.92rem; }
+    .post-full p { margin-bottom: 8px; }
 
-    .loading { color: #777; font-style: italic; }
+    .read-more-btn {
+      background: none;
+      border: none;
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .read-more-btn:hover { color: #2a5a35; }
+
+    .loading { color: #777; font-style: italic; padding: 20px 0; }
     .error { color: #a00; font-size: 0.9rem; }
-
-    #sidebar { width: 190px; flex-shrink: 0; font-size: 0.88rem; }
-    .sidebar-section { margin-bottom: 20px; }
-    .sidebar-section h3 {
-      font-size: 0.82rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #555;
-      margin-bottom: 6px;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 3px;
-    }
-    .sidebar-section a {
-      display: block;
-      color: var(--link);
-      text-decoration: none;
-      padding: 2px 0;
-    }
-    .sidebar-section a:hover { text-decoration: underline; }
-    .sidebar-section a::before { content: "• "; color: var(--accent); }
 
     #footer {
       border-top: 2px solid var(--dark);
@@ -150,9 +202,7 @@
     }
 
     @media (max-width: 600px) {
-      #content-area { flex-direction: column; padding: 16px; }
-      #main { padding-right: 0; margin-bottom: 20px; }
-      #sidebar { width: 100%; }
+      #content-area { padding: 16px; }
     }
   </style>
 </head>
@@ -180,16 +230,9 @@
 
   <div id="content-area">
     <div id="main">
-      <h2>Senaste nyheter</h2>
+      <h2>Nyheter &amp; inlägg</h2>
       <div id="news-posts">
         <p class="loading">Laddar inlägg…</p>
-      </div>
-    </div>
-
-    <div id="sidebar">
-      <div class="sidebar-section">
-        <h3>Senaste inläggen</h3>
-        <div id="recent-links"></div>
       </div>
     </div>
   </div>
@@ -199,18 +242,17 @@
   </div>
 </div>
 
-<!-- Byt ut DITT_GITHUB_ANVÄNDARNAMN och DITT_REPO mot dina egna -->
 <script>
   const GITHUB_USER = 'xrayEU';
   const GITHUB_REPO = 'voxna-sodra-fvf';
   const POSTS_PATH = 'inlagg';
+  const PREVIEW_LENGTH = 150;
 
   function formatSwedishDate(dateString) {
     const date = new Date(dateString);
     return date.toLocaleDateString('sv-SE', { year: 'numeric', month: 'long', day: 'numeric' });
   }
 
-  // Enkel markdown-parser för title, date och body
   function parseFrontmatter(text) {
     const match = text.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
     if (!match) return null;
@@ -223,7 +265,6 @@
     return meta;
   }
 
-  // Konverterar enkel markdown till HTML
   function simpleMarkdown(text) {
     return text
       .replace(/^### (.+)$/gm, '<h4>$1</h4>')
@@ -235,18 +276,44 @@
       .replace(/$/, '</p>');
   }
 
+  function getPreview(text) {
+    const plain = text
+      .replace(/^#+\s/gm, '')
+      .replace(/\*\*(.+?)\*\*/g, '$1')
+      .replace(/\*(.+?)\*/g, '$1')
+      .replace(/\n+/g, ' ')
+      .trim();
+    if (plain.length <= PREVIEW_LENGTH) return plain;
+    return plain.substring(0, PREVIEW_LENGTH).replace(/\s+\S*$/, '') + '…';
+  }
+
+  function togglePost(id) {
+    const preview = document.getElementById('preview-' + id);
+    const full = document.getElementById('full-' + id);
+    const btn = document.getElementById('btn-' + id);
+    const isExpanded = full.style.display === 'block';
+    full.style.display = isExpanded ? 'none' : 'block';
+    preview.style.display = isExpanded ? 'block' : 'none';
+    btn.textContent = isExpanded ? 'Läs mer' : 'Visa mindre';
+  }
+
+  function toggleYear(year) {
+    const posts = document.getElementById('year-posts-' + year);
+    const header = document.getElementById('year-header-' + year);
+    const isOpen = posts.classList.contains('open');
+    posts.classList.toggle('open', !isOpen);
+    header.classList.toggle('open', !isOpen);
+  }
+
   async function loadPosts() {
     const container = document.getElementById('news-posts');
-    const recentLinks = document.getElementById('recent-links');
 
     try {
-      // Hämta lista på filer från GitHub API
       const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${POSTS_PATH}`;
       const res = await fetch(apiUrl);
       if (!res.ok) throw new Error('Kunde inte hämta inlägg');
       const files = await res.json();
 
-      // Hämta innehållet i varje fil
       const posts = await Promise.all(
         files
           .filter(f => f.name.endsWith('.md'))
@@ -257,7 +324,6 @@
           })
       );
 
-      // Sortera nyast först
       posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
       if (posts.length === 0) {
@@ -265,25 +331,53 @@
         return;
       }
 
-      container.innerHTML = '';
-      recentLinks.innerHTML = '';
-
+      // Gruppera per år
+      const byYear = {};
       posts.forEach((post, i) => {
-        const id = `post-${i}`;
-        const article = document.createElement('article');
-        article.className = 'post';
-        article.id = id;
-        article.innerHTML = `
-          <time datetime="${post.date}">${formatSwedishDate(post.date)}</time>
-          <h3>${post.title}</h3>
-          <div>${simpleMarkdown(post.body)}</div>
-        `;
-        container.appendChild(article);
+        const year = post.date ? post.date.substring(0, 4) : 'Okänt';
+        if (!byYear[year]) byYear[year] = [];
+        byYear[year].push({ ...post, index: i });
+      });
 
-        const link = document.createElement('a');
-        link.href = `#${id}`;
-        link.textContent = post.title;
-        recentLinks.appendChild(link);
+      container.innerHTML = '';
+      const years = Object.keys(byYear).sort((a, b) => b - a);
+
+      years.forEach((year, yi) => {
+        const group = document.createElement('div');
+        group.className = 'year-group';
+
+        const postsHtml = byYear[year].map(post => {
+          const i = post.index;
+          const preview = getPreview(post.body);
+          const fullHtml = simpleMarkdown(post.body);
+          const hasMore = post.body.replace(/\s+/g, ' ').trim().length > PREVIEW_LENGTH;
+          return `
+            <div class="post">
+              <time datetime="${post.date}">${formatSwedishDate(post.date)}</time>
+              <h3>${post.title}</h3>
+              <p class="post-preview" id="preview-${i}">${preview}</p>
+              <div class="post-full" id="full-${i}">${fullHtml}</div>
+              ${hasMore ? `<button class="read-more-btn" id="btn-${i}" onclick="togglePost(${i})">Läs mer</button>` : ''}
+            </div>
+          `;
+        }).join('');
+
+        const isCurrentYear = yi === 0;
+
+        group.innerHTML = `
+          <div class="year-header ${isCurrentYear ? 'open' : ''}" id="year-header-${year}" onclick="toggleYear('${year}')">
+            <div class="year-header-left">
+              <span class="year-label">${year}</span>
+              <span class="year-count">${byYear[year].length} inlägg</span>
+            </div>
+            <span class="year-arrow">▼</span>
+          </div>
+          <div class="year-posts ${isCurrentYear ? 'open' : ''}" id="year-posts-${year}">
+            ${postsHtml}
+          </div>
+        `;
+
+        container.appendChild(group);
       });
 
     } catch (err) {
