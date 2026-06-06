@@ -51,20 +51,6 @@
       object-position: center 60%;
       display: block;
     }
-    #hero .fallback {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(160deg, #2d5a3d 0%, #4a8a5a 40%, #7ab87a 70%, #a8d4a8 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #hero .fallback span {
-      color: rgba(255,255,255,0.35);
-      font-size: 0.85rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
 
     nav {
       background: #2b2b2b;
@@ -147,6 +133,19 @@
     .price-table tbody td { padding: 9px 12px; color: #333; vertical-align: top; }
     .price-table tbody td:nth-child(2) { font-weight: 700; white-space: nowrap; color: var(--dark); }
     .price-table .note { font-size: 0.82rem; color: #666; display: block; margin-top: 2px; }
+    .badge-put-take {
+      display: inline-block;
+      background: #1a4a8a;
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      vertical-align: middle;
+      margin-left: 5px;
+    }
 
     .swish-card {
       border: 1px solid #73b239;
@@ -301,20 +300,26 @@
           <tr><td>Veckokort</td><td>150:-</td><td></td></tr>
           <tr><td>Årskort Voxnabor</td><td>200:-</td><td></td></tr>
           <tr><td>Årskort övriga</td><td>250:-</td><td></td></tr>
-        <tr>
-  <td>Dagkort Hälltjärn<span class="note">Ingår även i årskortet</span></td>
-  <td>100:-</td>
-  <td>Max 3 fiskar per kort<span class="note">Röding, öring</span></td>
-</tr>
+          <tr>
+            <td>Dagkort Hälltjärn <span class="badge-put-take">Put &amp; Take</span><span class="note">Ingår även i årskortet</span></td>
+            <td>100:-</td>
+            <td>Max 3 fiskar per kort<span class="note">Röding, öring</span></td>
           </tr>
-          <tr><td>Dagkort Galttjärn</td><td>100:-</td><td>Max 2 fiskar per kort · Regnbåge</td>
+          <tr>
+            <td>Dagkort Galttjärn <span class="badge-put-take">Put &amp; Take</span></td>
+            <td>100:-</td>
+            <td>Max 2 fiskar per kort<span class="note">Regnbåge</span></td>
           </tr>
           <tr>
             <td>Dagkort Finnstugaströmmen<span class="note">Ingår även i årskortet</span></td>
             <td>100:-</td>
             <td>Flugfiske, C&amp;R, hullinglöst</td>
           </tr>
-          <tr><td>Dagkort Finnsen</td><td>200:-</td><td>Max 3 fiskar per kort · Röding, Öring</td></tr>
+          <tr>
+            <td>Dagkort Finnsen <span class="badge-put-take">Put &amp; Take</span></td>
+            <td>200:-</td>
+            <td>Max 3 fiskar per kort<span class="note">Röding, öring</span></td>
+          </tr>
           <tr>
             <td>Båthyra Finnsen<span class="note">Bokning och nyckel via Voxna Livs<br/>Tel: 0271-41067</span></td>
             <td>100:-</td>
