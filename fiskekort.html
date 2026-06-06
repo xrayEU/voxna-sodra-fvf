@@ -129,6 +129,19 @@
     .price-table tbody td { padding: 9px 12px; color: #333; vertical-align: top; }
     .price-table tbody td:nth-child(2) { font-weight: 700; white-space: nowrap; color: var(--dark); }
     .price-table .note { font-size: 0.82rem; color: #666; display: block; margin-top: 2px; }
+    .badge-put-take {
+      display: inline-block;
+      background: #2a5fa0;
+      color: #b5d4f4;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      vertical-align: middle;
+      margin-left: 5px;
+    }
 
     /* PUT & TAKE RUTA */
     .put-take-box {
@@ -314,12 +327,12 @@
           <tr><td>Årskort Voxnabor</td><td>200:-</td><td></td></tr>
           <tr><td>Årskort övriga</td><td>250:-</td><td></td></tr>
           <tr>
-            <td>Dagkort Hälltjärn<span class="note">Ingår även i årskortet</span></td>
+            <td>Dagkort Hälltjärn <span class="badge-put-take">Put &amp; Take</span><span class="note">Ingår även i årskortet</span></td>
             <td>100:-</td>
             <td>Max 3 fiskar per kort<span class="note">Röding, öring</span></td>
           </tr>
           <tr>
-            <td>Dagkort Galttjärn</td>
+            <td>Dagkort Galttjärn <span class="badge-put-take">Put &amp; Take</span></td>
             <td>100:-</td>
             <td>Max 2 fiskar per kort<span class="note">Regnbåge</span></td>
           </tr>
@@ -329,7 +342,7 @@
             <td>Flugfiske, C&amp;R, hullinglöst</td>
           </tr>
           <tr>
-            <td>Dagkort Finnsen</td>
+            <td>Dagkort Finnsen <span class="badge-put-take">Put &amp; Take</span></td>
             <td>200:-</td>
             <td>Max 3 fiskar per kort<span class="note">Röding, öring</span></td>
           </tr>
@@ -340,6 +353,20 @@
           </tr>
         </tbody>
       </table>
+
+      <!-- PUT & TAKE RUTA — Fyll i rätt vatten och fiskarter nedan -->
+      <div class="put-take-box">
+        <div class="put-take-box-header">
+          <span class="put-take-badge">Put &amp; Take</span>
+          <span class="put-take-box-title">Fiske med garanterad fångst</span>
+        </div>
+        <ul>
+          <li>Röding – sätts i regelbundet i <strong>VATTEN HÄR</strong></li>
+          <li>Öring – sätts i regelbundet i <strong>VATTEN HÄR</strong></li>
+          <li>Regnbåge – sätts i regelbundet i <strong>VATTEN HÄR</strong></li>
+        </ul>
+        <p class="put-take-box-note">Gäller med vanligt dagkort (80:-). Perfekt för hela familjen!</p>
+      </div>
 
       <h3>Köp fiskekort via Swish</h3>
       <p>Detta ska göras <strong>innan fisket påbörjas</strong>.</p>
