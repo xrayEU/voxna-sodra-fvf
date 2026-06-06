@@ -51,6 +51,20 @@
       object-position: center 60%;
       display: block;
     }
+    #hero .fallback {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(160deg, #2d5a3d 0%, #4a8a5a 40%, #7ab87a 70%, #a8d4a8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hero .fallback span {
+      color: rgba(255,255,255,0.35);
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
 
     nav {
       background: #2b2b2b;
@@ -107,7 +121,11 @@
       border-left: 4px solid var(--accent);
       padding-left: 10px;
     }
-    #main p { line-height: 1.7; color: #444; margin-bottom: 8px; }
+    #main p {
+      line-height: 1.7;
+      color: #444;
+      margin-bottom: 8px;
+    }
 
     .price-table {
       width: 100%;
@@ -129,80 +147,6 @@
     .price-table tbody td { padding: 9px 12px; color: #333; vertical-align: top; }
     .price-table tbody td:nth-child(2) { font-weight: 700; white-space: nowrap; color: var(--dark); }
     .price-table .note { font-size: 0.82rem; color: #666; display: block; margin-top: 2px; }
-    .badge-put-take {
-      display: inline-block;
-      background: #1a4a8a;
-      color: #fff;
-      font-size: 0.68rem;
-      font-weight: 700;
-      padding: 1px 7px;
-      border-radius: 20px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      vertical-align: middle;
-      margin-left: 5px;
-    }
-
-    /* PUT & TAKE RUTA */
-    .put-take-box {
-      background: #f0f7ff;
-      border: 1px solid #a8c8f0;
-      border-left: 4px solid #2a5fa0;
-      border-radius: 8px;
-      padding: 14px 16px;
-      margin: 0 0 20px;
-      font-size: 0.9rem;
-    }
-    .put-take-box-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    .put-take-badge {
-      display: inline-block;
-      background: #2a5fa0;
-      color: #fff;
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 20px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-    .put-take-box-title {
-      font-family: 'Merriweather', serif;
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: var(--dark);
-    }
-    .put-take-box ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .put-take-box ul li {
-      color: #444;
-      line-height: 1.5;
-      padding-left: 14px;
-      position: relative;
-    }
-    .put-take-box ul li::before {
-      content: "🐟";
-      position: absolute;
-      left: 0;
-      font-size: 0.8rem;
-    }
-    .put-take-box-note {
-      margin-top: 8px;
-      font-size: 0.82rem;
-      color: #666;
-      border-top: 1px solid #d0e4f8;
-      padding-top: 8px;
-    }
 
     .swish-card {
       border: 1px solid #73b239;
@@ -235,6 +179,21 @@
       color: #1a6217;
       line-height: 1.1;
     }
+    .swish-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #4a6d34;
+      font-size: 0.92rem;
+    }
+    .swish-note::before {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #73b239;
+    }
     .swish-qr { width: 120px; min-width: 120px; text-align: center; }
     .swish-qr img {
       width: 100%;
@@ -253,6 +212,19 @@
       .swish-number { font-size: 1.6rem; }
     }
 
+    .rules-box {
+      background: #fff8f0;
+      border-left: 4px solid #c87a2a;
+      padding: 12px 16px;
+      margin: 10px 0 18px;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: #444;
+    }
+    .rules-box ul { list-style: none; padding: 0; }
+    .rules-box ul li { padding: 3px 0; }
+    .rules-box ul li::before { content: "• "; color: #c87a2a; font-weight: 700; }
+
     #sidebar { width: 190px; flex-shrink: 0; font-size: 0.88rem; }
     .sidebar-section { margin-bottom: 20px; }
     .sidebar-section h3 {
@@ -266,6 +238,9 @@
       padding-bottom: 3px;
     }
     .sidebar-section p { line-height: 1.6; color: #555; font-size: 0.85rem; }
+    .sidebar-section a { display: block; color: var(--link); text-decoration: none; padding: 2px 0; }
+    .sidebar-section a:hover { text-decoration: underline; }
+    .sidebar-section a::before { content: "• "; color: var(--accent); }
 
     #footer {
       border-top: 2px solid var(--dark);
@@ -326,26 +301,20 @@
           <tr><td>Veckokort</td><td>150:-</td><td></td></tr>
           <tr><td>Årskort Voxnabor</td><td>200:-</td><td></td></tr>
           <tr><td>Årskort övriga</td><td>250:-</td><td></td></tr>
-          <tr>
-            <td>Dagkort Hälltjärn <span class="badge-put-take">Put &amp; Take</span><span class="note">Ingår även i årskortet</span></td>
-            <td>100:-</td>
-            <td>Max 3 fiskar per kort<span class="note">Röding, öring</span></td>
+        <tr>
+  <td>Dagkort Hälltjärn<span class="note">Ingår även i årskortet</span></td>
+  <td>100:-</td>
+  <td>Max 3 fiskar per kort<span class="note">Röding, öring</span></td>
+</tr>
           </tr>
-          <tr>
-            <td>Dagkort Galttjärn <span class="badge-put-take">Put &amp; Take</span></td>
-            <td>100:-</td>
-            <td>Max 2 fiskar per kort<span class="note">Regnbåge</span></td>
+          <tr><td>Dagkort Galttjärn</td><td>100:-</td><td>Max 2 fiskar per kort · Regnbåge</td>
           </tr>
           <tr>
             <td>Dagkort Finnstugaströmmen<span class="note">Ingår även i årskortet</span></td>
             <td>100:-</td>
             <td>Flugfiske, C&amp;R, hullinglöst</td>
           </tr>
-          <tr>
-            <td>Dagkort Finnsen <span class="badge-put-take">Put &amp; Take</span></td>
-            <td>200:-</td>
-            <td>Max 3 fiskar per kort<span class="note">Röding, öring</span></td>
-          </tr>
+          <tr><td>Dagkort Finnsen</td><td>200:-</td><td>Max 3 fiskar per kort · Röding, Öring</td></tr>
           <tr>
             <td>Båthyra Finnsen<span class="note">Bokning och nyckel via Voxna Livs<br/>Tel: 0271-41067</span></td>
             <td>100:-</td>
@@ -366,7 +335,7 @@
           <div class="qr-caption">Skanna med Swish-appen</div>
         </div>
       </div>
-      <p>Fiskekort finns också att köpa hos <strong>Voxna Livs</strong> (automat eller handel).</p>
+      <p>Fiskekort finns också att köpa hos Voxna Livs.</p>
 
       <script>
 (function() {
