@@ -254,6 +254,17 @@
     .sidebar-section a:hover { text-decoration: underline; }
     .sidebar-section a::before { content: "• "; color: var(--accent); }
 
+    .muted-link {
+      color: #3a7a4a;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color .15s;
+    }
+    .muted-link:hover {
+      color: #265334;
+      text-decoration: underline;
+    }
+
     /* Tooltip / kontaktkort */
     .th-tooltip {
       position: relative;
@@ -418,7 +429,7 @@
           <div class="qr-caption">Skanna med Swish-appen</div>
         </div>
       </div>
-  <p>Fiskekort finns också att köpa hos <a href="https://www.handlarn.se/butiker/voxna-livs/" target="_blank">Voxna Livs</a>.</p>
+  <p>Fiskekort finns också att köpa hos <a href="https://www.handlarn.se/butiker/voxna-livs/" target="_blank" class="muted-link">Voxna Livs</a>.</p>
 
       <script>
 (function() {
@@ -465,7 +476,7 @@
 
   <div id="footer">
     <span>
-      <span class="footer-desktop">© 2026 Voxna Södra Fiskevårdsförening. All rights reserved.</span>
+      <span class="footer-desktop">© 2026 Voxna Södra Fiskevårdsförening.</span>
       <span class="footer-mobile">© 2026 Voxna Södra FVF</span>
     </span>
     <span>Design &amp; utveckling av <span class="th-tooltip">TH
