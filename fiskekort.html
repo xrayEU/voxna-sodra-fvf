@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+html_content = """<!DOCTYPE html>
 <html lang="sv">
 <head>
   <meta charset="UTF-8" />
@@ -194,6 +194,9 @@
       color: #1a6217;
       line-height: 1.1;
     }
+    .swish-backup-number {
+      display: none;
+    }
     .swish-note {
       display: inline-flex;
       align-items: center;
@@ -221,23 +224,60 @@
     .swish-qr .qr-caption { margin-top: 10px; font-size: 0.85rem; color: #3f5f2f; line-height: 1.3; }
 
     @media (max-width: 600px) {
-      .swish-card { padding: 18px; }
+      .swish-card { 
+        padding: 20px 18px; 
+        flex-direction: column;
+        align-items: center; 
+        text-align: center;
+      }
+      .swish-card-main { 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        min-width: unset;
+        gap: 8px;
+      }
       .swish-qr { display: none; }
-      .swish-button { display: inline-block; }
-      .swish-number { font-size: 1.6rem; }
+      .swish-button { 
+        display: inline-block; 
+        width: 100%;
+        max-width: 280px;
+        padding: 12px 24px 12px 52px;
+        font-size: 1rem;
+        box-sizing: border-box;
+        text-align: center;
+        background: #73b239 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.07 14.34L7.41 12.8a.996.996 0 1 1 1.41-1.41l2.12 2.12 4.24-4.24a.996.996 0 1 1 1.41 1.41l-4.95 4.95c-.39.39-1.02.39-1.41 0z'/%3E%3C/svg%3E") no-repeat 22px center;
+        background-size: 20px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+      .swish-number { display: none; }
+      .swish-backup-number { 
+        display: block; 
+        font-size: 0.88rem; 
+        color: #555; 
+        margin-top: 4px;
+      }
     }
 
     .rules-box {
-     /* Ny stil som matchar Swish-temat men återanvänder sidans struktur */
-.swish-rules {
-  background: #f8ffee; /* Samma ljusgröna som ditt swish-card */
-  border-left-color: #73b239; /* Swish-grön kantlinje */
-  margin-bottom: 12px;
-}
-.swish-rules ul li::before {
-  content: "✓ "; /* En bock istället för en vanlig punkt för att visa att det är instruktioner */
-  color: #1a6217; /* Mörkgrön bock */
-}
+      background: #fff8f0;
+      border-left: 4px solid #c87a2a;
+      padding: 12px 16px;
+      margin: 10px 0 18px;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: #444;
+    }
+    .swish-rules {
+      background: #f8ffee;
+      border-left-color: #73b239;
+      margin-bottom: 12px;
+    }
+    .swish-rules ul li::before {
+      content: "✓ ";
+      color: #1a6217;
+      font-weight: 700;
     }
     .rules-box ul { list-style: none; padding: 0; }
     .rules-box ul li { padding: 3px 0; }
@@ -346,10 +386,8 @@
       .footer-mobile { display: inline; }
     }
   </style>
-  <!-- Cloudflare Web Analytics -->
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "e07b622263724bc68c6dd825b6246d8f"}'></script>
-  <!-- End Cloudflare Web Analytics -->
-</head>
+  </head>
 <body>
 
 <div id="wrapper">
@@ -392,13 +430,11 @@
           <tr><td>Dagkort</td><td>80:-</td><td></td></tr>
           <tr><td>Veckokort</td><td>150:-</td><td></td></tr>
           <tr><td>Årskort Voxnabor</td><td>200:-</td><td><span class="note">Inkl. Hälltjärn &amp; Finnstugaströmmen</span></td></tr>
-<tr><td>Årskort övriga</td><td>250:-</td><td><span class="note">Inkl. Hälltjärn &amp; Finnstugaströmmen</span></td></tr>
+          <tr><td>Årskort övriga</td><td>250:-</td><td><span class="note">Inkl. Hälltjärn &amp; Finnstugaströmmen</span></td></tr>
           <tr>
-            <tr>
-  <td>Dagkort Hälltjärn <span class="badge-put-take">Put &amp; Take</span></td>
-  <td>100:-</td>
-  <td>Max 3 fiskar per kort<span class="note">Röding, öring</span></td>
-</tr>
+            <td>Dagkort Hälltjärn <span class="badge-put-take">Put &amp; Take</span></td>
+            <td>100:-</td>
+            <td>Max 3 fiskar per kort<span class="note">Röding, öring</span></td>
           </tr>
           <tr>
             <td>Dagkort Galttjärn <span class="badge-put-take">Put &amp; Take</span></td>
@@ -406,10 +442,10 @@
             <td>Max 2 fiskar per kort<span class="note">Regnbåge</span></td>
           </tr>
           <tr>
-  <td>Dagkort Finnstugaströmmen <span class="badge-cr">Catch &amp; Release</span></td>
-  <td>100:-</td>
-  <td>Flugfiske, hullinglöst</td>
-</tr>
+            <td>Dagkort Finnstugaströmmen <span class="badge-cr">Catch &amp; Release</span></td>
+            <td>100:-</td>
+            <td>Flugfiske, hullinglöst</td>
+          </tr>
           <tr>
             <td>Dagkort Finnsen <span class="badge-put-take">Put &amp; Take</span></td>
             <td>200:-</td>
@@ -423,20 +459,20 @@
         </tbody>
       </table>
 
-  <h3>Köp fiskekort via Swish</h3>
+      <h3>Köp fiskekort via Swish</h3>
 
-<!-- HÄR ÄR DEN NYA SNYGGARE TEXTEN -->
-<div class="rules-box swish-rules">
-  <ul>
-    <li>Detta måste göras <strong>innan fisket påbörjas</strong>.</li>
-    <li>Skriv <strong>namnet på vattnet</strong> där du ska fiska i Swish-meddelandet.</li>
-    <li>Se till att skicka <strong>rätt summa</strong> enligt prislistan ovan.</li>
-  </ul>
-</div>
+      <div class="rules-box swish-rules">
+        <ul>
+          <li>Detta måste göras <strong>innan fisket påbörjas</strong>.</li>
+          <li>Skriv <strong>namnet på vattnet</strong> där du ska fiska i Swish-meddelandet.</li>
+          <li>Se till att skicka <strong>rätt summa</strong> enligt prislistan ovan.</li>
+        </ul>
+      </div>
 
-<div class="swish-card">
+      <div class="swish-card">
         <div class="swish-card-main">
           <a id="swishLink" class="swish-button" href="#">Betala med Swish</a>
+          <span class="swish-backup-number">Swishnummer: 123 128 02 21</span>
           <div class="swish-number">123 128 02 21</div>
         </div>
         <div id="swishQrWrapper" class="swish-qr" aria-label="QR-kod för Swish-betalning">
@@ -444,7 +480,7 @@
           <div class="qr-caption">Skanna med Swish-appen</div>
         </div>
       </div>
-  <p>Fiskekort finns också att köpa hos <a href="https://www.handlarn.se/butiker/voxna-livs/" target="_blank" class="muted-link">Voxna Livs</a>.</p>
+      <p>Fiskekort finns också att köpa hos <a href="https://www.handlarn.se/butiker/voxna-livs/" target="_blank" class="muted-link">Voxna Livs</a>.</p>
 
       <script>
 (function() {
@@ -484,8 +520,6 @@
       </script>
 
     </div>
-
-    
   </div>
 
   <div id="footer">
@@ -511,7 +545,6 @@
   let hideTimer;
 
   if (tooltip && box) {
-    // Desktop hover
     tooltip.addEventListener('mouseenter', () => {
       clearTimeout(hideTimer);
       tooltip.classList.add('active');
@@ -524,7 +557,6 @@
       hideTimer = setTimeout(() => tooltip.classList.remove('active'), 100);
     });
 
-    // Mobil klick
     tooltip.addEventListener('click', (e) => {
       e.stopPropagation();
       tooltip.classList.toggle('active');
@@ -537,3 +569,8 @@
 
 </body>
 </html>
+"""
+
+with open("fiskekort.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
+print("File successfully updated and saved.")
