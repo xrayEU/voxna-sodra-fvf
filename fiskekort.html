@@ -418,7 +418,7 @@
       </table>
 
       <h3>Köp fiskekort via Swish</h3>
-      <p>Detta ska göras <strong>innan fisket påbörjas</strong>.</p>
+      <p>Detta ska göras <strong>innan fisket påbörjas</strong>. Skriv namnet på vattnet där du ska fiska i meddelandet och skicka rätt summa.</p>
       <div class="swish-card">
         <div class="swish-card-main">
           <a id="swishLink" class="swish-button" href="#">Betala med Swish</a>
@@ -435,8 +435,7 @@
 (function() {
   var swishData = JSON.stringify({
     version: 1,
-    payee: { value: "1231280221", editable: false },
-    message: { value: "VOXNA SÖDRA FISKEVÅRDSFÖRENING", editable: true }
+    payee: { value: "1231280221", editable: false }
   });
 
   var schemeLink = 'swish://payment?data=' + encodeURIComponent(swishData);
