@@ -464,8 +464,9 @@ html_content = """<!DOCTYPE html>
       <div class="rules-box swish-rules">
         <ul>
           <li>Detta måste göras <strong>innan fisket påbörjas</strong>.</li>
-          <li>Skriv <strong>namnet på vattnet</strong> där du ska fiska i Swish-meddelandet.</li>
           <li>Se till att skicka <strong>rätt summa</strong> enligt prislistan ovan.</li>
+          <li>Skriv <strong>namnet på vattnet</strong> där du ska fiska.</li>
+          
         </ul>
       </div>
 
@@ -569,8 +570,3 @@ html_content = """<!DOCTYPE html>
 
 </body>
 </html>
-"""
-
-with open("fiskekort.html", "w", encoding="utf-8") as f:
-    f.write(html_content)
-print("File successfully updated and saved.")
