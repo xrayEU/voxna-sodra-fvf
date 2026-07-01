@@ -86,8 +86,10 @@
 
     /* PAGE CONTENT */
     #page-content { padding: 24px; }
-    #page-content h2 {
-      font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; color: var(--dark);
+    .page-title {
+      font-family: 'Merriweather', serif;
+      font-size: 1.35rem; font-weight: 700; margin-bottom: 14px; color: var(--dark);
+      padding-bottom: 8px; border-bottom: 2px solid var(--accent); display: inline-block;
     }
     #page-content p { color: #555; font-size: 0.9rem; margin-bottom: 16px; line-height: 1.6; }
 
@@ -266,7 +268,7 @@
   </nav>
 
   <div id="page-content">
-    <h2>Karta över fiskevatten</h2>
+    <h2 class="page-title">Karta över fiskevatten</h2>
     <p>Klicka på en markering för att se information om vattendraget. Orange markeringar kräver eget dagkort.</p>
 
     <div id="map"></div>

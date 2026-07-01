@@ -87,12 +87,15 @@
       padding: 24px;
     }
 
-    #main h2 {
+    .page-title {
       font-family: 'Merriweather', serif;
-      font-size: 1.25rem;
+      font-size: 1.35rem;
       font-weight: 700;
-      margin-bottom: 20px;
+      margin-bottom: 14px;
       color: var(--dark);
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
     }
 
     /* ACCORDION */
@@ -293,7 +296,7 @@
 
   <div id="content-area">
     <div id="main">
-      <h2>Nyheter &amp; inlägg</h2>
+      <h2 class="page-title">Nyheter &amp; inlägg</h2>
       <div id="news-posts">
         <p class="loading">Laddar inlägg…</p>
       </div>
