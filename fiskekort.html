@@ -491,14 +491,14 @@
       <script>
 (function() {
   var swishData = JSON.stringify({
-  version: 1,
-  payee: { value: "1231280221", editable: false },
-  message: { value: "", editable: true }
-});
+    version: 1,
+    payee: { value: "1231280221", editable: false },
+    message: { value: "", editable: true }
   });
 
-  var schemeLink = 'swish://payment?data=' + encodeURIComponent(swishData);
-  var intentLink = 'intent://payment?data=' + encodeURIComponent(swishData) + '#Intent;scheme=swish;package=se.bankgirot.swish;end';
+  var encoded = encodeURIComponent(swishData);
+  var schemeLink = 'swish://payment?data=' + encoded;
+  var intentLink = 'intent://payment?data=' + encoded + '#Intent;scheme=swish;package=se.bankgirot.swish;end';
 
   var link = document.getElementById('swishLink');
   var qrWrapper = document.getElementById('swishQrWrapper');
@@ -514,10 +514,9 @@
     link.addEventListener('click', function(e) {
       e.preventDefault();
       if (isAndroid) {
-        window.location = intentLink;
-        setTimeout(function() { window.location = schemeLink; }, 600);
+        window.location.href = intentLink;
       } else {
-        window.location = schemeLink;
+        window.location.href = schemeLink;
       }
     });
   } else {
