@@ -491,8 +491,10 @@
       <script>
 (function() {
   var swishData = JSON.stringify({
-    version: 1,
-    payee: { value: "1231280221", editable: false }
+  version: 1,
+  payee: { value: "1231280221", editable: false },
+  message: { value: "", editable: true }
+});
   });
 
   var schemeLink = 'swish://payment?data=' + encodeURIComponent(swishData);
