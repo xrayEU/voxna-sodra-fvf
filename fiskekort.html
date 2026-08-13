@@ -220,16 +220,6 @@
       color: #1a6217;
     }
 
-    .qr-details summary {
-      cursor: pointer;
-      font-size: 0.88rem;
-      color: #2e5917;
-      font-weight: 600;
-    }
-    .qr-details summary:hover {
-      text-decoration: underline;
-    }
-
     .rules-box {
       background: #fff8f0;
       border-left: 4px solid #c87a2a;
@@ -252,6 +242,15 @@
     .rules-box ul { list-style: none; padding: 0; }
     .rules-box ul li { padding: 3px 0; }
     .rules-box ul li::before { content: "• "; color: #c87a2a; font-weight: 700; }
+
+    /* Styrning för mobil vs dator (PC) */
+    .mobile-only { display: flex; flex-direction: column; gap: 14px; }
+    .desktop-only { display: none; flex-direction: column; gap: 14px; }
+
+    @media (pointer: fine) and (min-width: 769px) {
+      .mobile-only { display: none !important; }
+      .desktop-only { display: flex !important; }
+    }
 
     /* Tooltip / kontaktkort */
     .th-tooltip {
@@ -372,7 +371,7 @@
           <tr><td>Dagkort</td><td>80:-</td><td></td></tr>
           <tr><td>Veckokort</td><td>150:-</td><td></td></tr>
           <tr><td>Årskort Voxnabor</td><td>200:-</td><td><span class="note">Inkl. Hälltjärn &amp; Finnstugaströmmen</span></td></tr>
-          <tr><td>Årskort Övriga</td><td>250:-</td><td><span class="note">Inkl. Hälltjärn &amp; Finnstugaströmmen</span></td></tr>
+          <tr><td>Årskort övriga</td><td>250:-</td><td><span class="note">Inkl. Hälltjärn &amp; Finnstugaströmmen</span></td></tr>
           <tr>
             <td>Dagkort Hälltjärn <span class="badge-put-take">Put &amp; Take</span></td>
             <td>100:-</td>
@@ -394,6 +393,11 @@
             <td>Max 3 fiskar per kort<span class="note">Röding, öring</span></td>
           </tr>
           <tr>
+            <td>Dagkort + Båt Finnsen <span class="badge-put-take">Put &amp; Take</span></td>
+            <td>300:-</td>
+            <td>Inkl. båthyra (Max 3 fiskar)<span class="note">Röding, öring</span></td>
+          </tr>
+          <tr>
             <td>Båthyra Finnsen<span class="note">Bokning och nyckel via Voxna Livs<br/>Tel: 0271-41067</span></td>
             <td>100:-</td>
             <td>Båtmotor ej tillåten</td>
@@ -409,44 +413,55 @@
 
       <div class="rules-box swish-rules">
         <ul>
+          <li>Detta måste göras <strong>innan fisket påbörjas</strong>.</li>
           <li>Summa och meddelande fylls i <strong>automatiskt</strong> när du väljer fiskekort i listan nedan.</li>
-          
-          
         </ul>
       </div>
 
       <div class="swish-container">
-        <!-- Rullista för val -->
-        <select id="fiskekortVal" class="swish-select">
-          <option value="" disabled selected hidden>-- Välj fiskekort --</option>
-          <option value="80" data-msg="Dagkort">Dagkort - 80 kr</option>
-          <option value="150" data-msg="Veckokort">Veckokort - 150 kr</option>
-          <option value="200" data-msg="Arskort Voxnabor">Årskort Voxnabor - 200 kr</option>
-          <option value="250" data-msg="Arskort Ovriga">Årskort Övriga - 250 kr</option>
-          <option value="100" data-msg="Dagkort Halltjarn">Dagkort Hälltjärn - 100 kr</option>
-          <option value="100" data-msg="Dagkort Galttjarn">Dagkort Galttjärn - 100 kr</option>
-          <option value="100" data-msg="Dagkort Finnstugastrommen">Dagkort Finnstugaströmmen - 100 kr</option>
-          <option value="200" data-msg="Dagkort Finnsen">Dagkort Finnsen - 200 kr</option>
-          <option value="100" data-msg="Bathyra Finnsen">Båthyra Finnsen - 100 kr</option>
-          <option value="300" data-msg="Dagkort + Bathyra Finnsen">Dagkort + Båthyra Finnsen - 300 kr</option>
-        </select>
+        <!-- Mobilvyn (Innehåller rullista och betalknapp) -->
+        <div class="mobile-only">
+          <select id="fiskekortVal" class="swish-select">
+            <option value="" disabled selected hidden>-- Välj fiskekort --</option>
+            <option value="80" data-msg="Dagkort">Dagkort - 80 kr</option>
+            <option value="150" data-msg="Veckokort">Veckokort - 150 kr</option>
+            <option value="200" data-msg="Arskort Voxnabor">Årskort Voxnabor - 200 kr</option>
+            <option value="250" data-msg="Arskort ovriga">Årskort övriga - 250 kr</option>
+            <option value="100" data-msg="Dagkort Halltjarn">Dagkort Hälltjärn - 100 kr</option>
+            <option value="100" data-msg="Dagkort Galttjarn">Dagkort Galttjärn - 100 kr</option>
+            <option value="100" data-msg="Dagkort Finnstugastrommen">Dagkort Finnstugaströmmen - 100 kr</option>
+            <option value="200" data-msg="Dagkort Finnsen">Dagkort Finnsen - 200 kr</option>
+            <option value="100" data-msg="Bathyra Finnsen">Båthyra Finnsen - 100 kr</option>
+            <option value="300" data-msg="Dagkort och Bat Finnsen">Dagkort + Båt Finnsen - 300 kr</option>
+            
+          </select>
 
-        <!-- Betalknapp -->
-        <a id="swishLink" href="#" class="swish-btn">
-          <svg class="swish-icon" viewBox="0 0 24 24" width="24" height="24">
-            <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-          </svg>
-          Betala med Swish
-        </a>
+          <a id="swishLink" href="#" class="swish-btn">
+            <svg class="swish-icon" viewBox="0 0 24 24" width="24" height="24">
+              <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+            Betala med Swish
+          </a>
+        </div>
 
-        <!-- Textinfo med klickbart nummer och dynamisk status -->
-        <div class="swish-info-text">
+        <!-- Textinfo för mobil -->
+        <div class="swish-info-text mobile-only">
           Swishnummer: <span id="copySwishNummer" style="cursor: pointer; text-decoration: underline;" title="Klicka för att kopiera">123 128 02 21</span><br>
           <span id="valdStatusText" style="color: #666; font-style: italic;">Inget fiskekort valt</span>
         </div>
 
-        <!-- Fällbar QR-kod för den som vill scanna -->
-        <details class="qr-details">
+        <!-- Datorvyn (PC) – Visar endast instruktion och QR-kod -->
+        <div class="desktop-only">
+          <div class="swish-info-text">
+            Scanna QR-koden med din mobilkamera för att swisha. Swishnummer: <strong>123 128 02 21</strong>
+          </div>
+          <div>
+            <img src="swish.png" alt="Swish QR-kod" style="max-width: 180px; height: auto; border-radius: 8px; border: 1px solid #ccc;">
+          </div>
+        </div>
+
+        <!-- Fällbar QR-kod för mobilen (om man mot förmodan vill fälla upp den där också) -->
+        <details class="qr-details mobile-only">
           <summary>Visa QR-kod för att scanna</summary>
           <div id="swishQrWrapper" style="margin-top: 10px;">
             <img src="swish.png" alt="Swish QR-kod" style="max-width: 180px; height: auto; border-radius: 8px; border: 1px solid #ccc;">
@@ -487,6 +502,7 @@
   const isMobile = isAndroid || isIOS || window.matchMedia('(pointer:coarse)').matches;
 
   function updateSwishLink() {
+    if (!selectEl) return;
     var selectedOption = selectEl.options[selectEl.selectedIndex];
     
     if (!selectedOption.value) {
@@ -515,33 +531,39 @@
     link.href = isAndroid ? intentLink : schemeLink;
   }
 
-  selectEl.addEventListener('change', updateSwishLink);
+  if (selectEl) {
+    selectEl.addEventListener('change', updateSwishLink);
+  }
 
-  link.addEventListener('click', function(e) {
-    var selectedOption = selectEl.options[selectEl.selectedIndex];
-    
-    if (!selectedOption.value) {
-      e.preventDefault();
-      alert("Vänligen välj typ av fiskekort i listan innan du betalar.");
-      return;
-    }
+  if (link) {
+    link.addEventListener('click', function(e) {
+      var selectedOption = selectEl.options[selectEl.selectedIndex];
+      
+      if (!selectedOption.value) {
+        e.preventDefault();
+        alert("Vänligen välj typ av fiskekort i listan innan du betalar.");
+        return;
+      }
 
-    var amount = selectedOption.value;
-    var message = selectedOption.getAttribute('data-msg');
+      var amount = selectedOption.value;
+      var message = selectedOption.getAttribute('data-msg');
 
-    if (!isMobile) {
-      e.preventDefault();
-      alert("Öppna Swish-appen i din telefon och swisha " + amount + " kr till 123 128 02 21.\nMeddelande: " + message);
-    }
-  });
-
-  copyNummerEl.addEventListener('click', function() {
-    navigator.clipboard.writeText("1231280221").then(function() {
-      alert("Swishnumret 123 128 02 21 har kopierats till urklipp!");
-    }, function() {
-      alert("Kunde inte kopiera numret automatiskt.");
+      if (!isMobile) {
+        e.preventDefault();
+        alert("Öppna Swish-appen i din telefon och swisha " + amount + " kr till 123 128 02 21.\nMeddelande: " + message);
+      }
     });
-  });
+  }
+
+  if (copyNummerEl) {
+    copyNummerEl.addEventListener('click', function() {
+      navigator.clipboard.writeText("1231280221").then(function() {
+        alert("Swishnumret 123 128 02 21 har kopierats till urklipp!");
+      }, function() {
+        alert("Kunde inte kopiera numret automatiskt.");
+      });
+    });
+  }
 
   updateSwishLink();
 })();
