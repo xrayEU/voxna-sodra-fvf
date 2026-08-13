@@ -162,30 +162,16 @@
       margin-left: 5px;
     }
 
-    /* Swish-kort och väljare */
-    .swish-card {
+    /* Swish-container och komponenter */
+    .swish-container {
       border: 1px solid #73b239;
       border-radius: 16px;
       background: #f8ffee;
       padding: 20px 22px;
       margin: 16px 0;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-    .swish-card-main { display: grid; gap: 12px; min-width: 260px; flex: 1; }
-    
-    .swish-select-group {
-      display: flex;
       flex-direction: column;
-      gap: 6px;
-    }
-    .swish-select-group label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #2e5917;
+      gap: 14px;
     }
     .swish-select {
       padding: 10px 12px;
@@ -196,17 +182,21 @@
       color: #333;
       font-family: inherit;
       outline: none;
+      width: 100%;
+      max-width: 320px;
     }
     .swish-select:focus {
       border-color: #73b239;
       box-shadow: 0 0 0 3px rgba(115, 178, 57, 0.2);
     }
 
-    .swish-button {
-      display: inline-block;
-      padding: 12px 24px 12px 52px;
-      background: #73b239 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.07 14.34L7.41 12.8a.996.996 0 1 1 1.41-1.41l2.12 2.12 4.24-4.24a.996.996 0 1 1 1.41 1.41l-4.95 4.95c-.39.39-1.02.39-1.41 0z'/%3E%3C/svg%3E") no-repeat 22px center;
-      background-size: 20px;
+    .swish-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 24px;
+      background: #73b239;
       color: #fff;
       text-decoration: none;
       border-radius: 999px;
@@ -214,54 +204,30 @@
       font-size: 1rem;
       width: 100%;
       max-width: 320px;
-      text-align: center;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      box-sizing: border-box;
-      transition: background 0.15s;
+      transition: background 0.15s, opacity 0.15s;
     }
-    .swish-button:hover {
+    .swish-btn:hover {
       background-color: #639c30;
     }
 
-    .swish-number-info {
+    .swish-info-text {
       font-size: 0.88rem;
       color: #555;
+      line-height: 1.5;
     }
-    .swish-number-info strong {
+    .swish-info-text strong {
       color: #1a6217;
     }
 
-    .swish-qr { width: 120px; min-width: 120px; text-align: center; }
-    .swish-qr img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 12px;
-      border: 2px solid #73b239;
-      background: #fff;
+    .qr-details summary {
+      cursor: pointer;
+      font-size: 0.88rem;
+      color: #2e5917;
+      font-weight: 600;
     }
-    .swish-qr .qr-caption { margin-top: 10px; font-size: 0.85rem; color: #3f5f2f; line-height: 1.3; }
-
-    @media (max-width: 600px) {
-      .swish-card { 
-        padding: 20px 18px; 
-        flex-direction: column;
-        align-items: center; 
-        text-align: center;
-      }
-      .swish-card-main { 
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        min-width: unset;
-        gap: 12px;
-      }
-      .swish-qr { display: none; }
-      .swish-select-group { width: 100%; text-align: left; }
-      .swish-button { 
-        max-width: 100%;
-      }
+    .qr-details summary:hover {
+      text-decoration: underline;
     }
 
     .rules-box {
@@ -286,34 +252,6 @@
     .rules-box ul { list-style: none; padding: 0; }
     .rules-box ul li { padding: 3px 0; }
     .rules-box ul li::before { content: "• "; color: #c87a2a; font-weight: 700; }
-
-    #sidebar { width: 190px; flex-shrink: 0; font-size: 0.88rem; }
-    .sidebar-section { margin-bottom: 20px; }
-    .sidebar-section h3 {
-      font-size: 0.82rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #555;
-      margin-bottom: 6px;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 3px;
-    }
-    .sidebar-section p { line-height: 1.6; color: #555; font-size: 0.85rem; }
-    .sidebar-section a { display: block; color: var(--link); text-decoration: none; padding: 2px 0; }
-    .sidebar-section a:hover { text-decoration: underline; }
-    .sidebar-section a::before { content: "• "; color: var(--accent); }
-
-    .muted-link {
-      color: #3a7a4a;
-      text-decoration: none;
-      font-weight: 600;
-      transition: color .15s;
-    }
-    .muted-link:hover {
-      color: #265334;
-      text-decoration: underline;
-    }
 
     /* Tooltip / kontaktkort */
     .th-tooltip {
@@ -385,7 +323,7 @@
     @media (max-width: 600px) {
       #content-area { flex-direction: column; padding: 16px; }
       #main { padding-right: 0; margin-bottom: 20px; }
-      #sidebar { width: 100%; }
+      .swish-select, .swish-btn { max-width: 100%; }
       .footer-desktop { display: none; }
       .footer-mobile { display: inline; }
     }
@@ -434,7 +372,7 @@
           <tr><td>Dagkort</td><td>80:-</td><td></td></tr>
           <tr><td>Veckokort</td><td>150:-</td><td></td></tr>
           <tr><td>Årskort Voxnabor</td><td>200:-</td><td><span class="note">Inkl. Hälltjärn &amp; Finnstugaströmmen</span></td></tr>
-          <tr><td>Årskort övriga</td><td>250:-</td><td><span class="note">Inkl. Hälltjärn &amp; Finnstugaströmmen</span></td></tr>
+          <tr><td>Årskort Övriga</td><td>250:-</td><td><span class="note">Inkl. Hälltjärn &amp; Finnstugaströmmen</span></td></tr>
           <tr>
             <td>Dagkort Hälltjärn <span class="badge-put-take">Put &amp; Take</span></td>
             <td>100:-</td>
@@ -471,121 +409,50 @@
 
       <div class="rules-box swish-rules">
         <ul>
-          <li>Detta måste göras <strong>innan fisket påbörjas</strong>.</li>
-          <li>Se till att skicka <strong>rätt summa</strong> enligt prislistan ovan.</li>
-          <li>Skriv <strong>namnet på vattnet</strong> där du ska fiska.</li>
+          <li>Summa och meddelande fylls i <strong>automatiskt</strong> när du väljer fiskekort i listan nedan.</li>
+          
+          
         </ul>
       </div>
 
-      <div class="swish-card">
-        <div class="swish-card-main">
-          <!-- Väljare för fiskekort -->
-          <div class="swish-select-group">
-            <label for="fiskekortVal">Välj typ av fiskekort:</label>
-          <select id="fiskekortVal" class="swish-select">
-  <option value="" disabled selected hidden>-- Välj fiskekort --</option>
-  <option value="80" data-msg="Dagkort">Dagkort - 80 kr</option>
-  <option value="150" data-msg="Veckokort">Veckokort - 150 kr</option>
-  <option value="200" data-msg="Arskort Voxnabor">Årskort Voxnabor - 200 kr</option>
-  <option value="250" data-msg="Arskort ovriga">Årskort övriga - 250 kr</option>
-  <option value="100" data-msg="Dagkort Halltjarn">Dagkort Hälltjärn - 100 kr</option>
-  <option value="100" data-msg="Dagkort Galttjarn">Dagkort Galttjärn - 100 kr</option>
-  <option value="100" data-msg="Dagkort Finnstugastrommen">Dagkort Finnstugaströmmen - 100 kr</option>
-  <option value="200" data-msg="Dagkort Finnsen">Dagkort Finnsen - 200 kr</option>
-  <option value="100" data-msg="Bathyra Finnsen">Båthyra Finnsen - 100 kr</option>
-</select>
+      <div class="swish-container">
+        <!-- Rullista för val -->
+        <select id="fiskekortVal" class="swish-select">
+          <option value="" disabled selected hidden>-- Välj fiskekort --</option>
+          <option value="80" data-msg="Dagkort">Dagkort - 80 kr</option>
+          <option value="150" data-msg="Veckokort">Veckokort - 150 kr</option>
+          <option value="200" data-msg="Arskort Voxnabor">Årskort Voxnabor - 200 kr</option>
+          <option value="250" data-msg="Arskort Ovriga">Årskort Övriga - 250 kr</option>
+          <option value="100" data-msg="Dagkort Halltjarn">Dagkort Hälltjärn - 100 kr</option>
+          <option value="100" data-msg="Dagkort Galttjarn">Dagkort Galttjärn - 100 kr</option>
+          <option value="100" data-msg="Dagkort Finnstugastrommen">Dagkort Finnstugaströmmen - 100 kr</option>
+          <option value="200" data-msg="Dagkort Finnsen">Dagkort Finnsen - 200 kr</option>
+          <option value="100" data-msg="Bathyra Finnsen">Båthyra Finnsen - 100 kr</option>
+          <option value="300" data-msg="Dagkort + Bathyra Finnsen">Dagkort + Båthyra Finnsen - 300 kr</option>
+        </select>
+
+        <!-- Betalknapp -->
+        <a id="swishLink" href="#" class="swish-btn">
+          <svg class="swish-icon" viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+          Betala med Swish
+        </a>
+
+        <!-- Textinfo med klickbart nummer och dynamisk status -->
+        <div class="swish-info-text">
+          Swishnummer: <span id="copySwishNummer" style="cursor: pointer; text-decoration: underline;" title="Klicka för att kopiera">123 128 02 21</span><br>
+          <span id="valdStatusText" style="color: #666; font-style: italic;">Inget fiskekort valt</span>
+        </div>
+
+        <!-- Fällbar QR-kod för den som vill scanna -->
+        <details class="qr-details">
+          <summary>Visa QR-kod för att scanna</summary>
+          <div id="swishQrWrapper" style="margin-top: 10px;">
+            <img src="swish.png" alt="Swish QR-kod" style="max-width: 180px; height: auto; border-radius: 8px; border: 1px solid #ccc;">
           </div>
-
-          <a id="swishLink" class="swish-button" href="#">Betala med Swish</a>
-          <div class="swish-number-info">Swishnummer: <strong>123 128 02 21</strong></div>
-        </div>
-        <div id="swishQrWrapper" class="swish-qr" aria-label="QR-kod för Swish-betalning">
-          <img src="swish.png" alt="QR-kod för Swish" loading="lazy" />
-          <div class="qr-caption">Skanna med Swish-appen</div>
-        </div>
+        </details>
       </div>
-
-      <script>
-      (function() {
-        const swishNummer = "1231280221";
-        const selectEl = document.getElementById('fiskekortVal');
-        const link = document.getElementById('swishLink');
-        const qrWrapper = document.getElementById('swishQrWrapper');
-
-        const isAndroid = /Android/i.test(navigator.userAgent);
-        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-        const isMobile = isAndroid || isIOS || window.matchMedia('(pointer:coarse)').matches;
-
-        if (!isMobile) {
-          qrWrapper.style.display = 'block';
-        } else {
-          qrWrapper.style.display = 'none';
-        }
-
-        function updateSwishLink() {
-          var selectedOption = selectEl.options[selectEl.selectedIndex];
-          var amount = selectedOption.value;
-          var message = selectedOption.getAttribute('data-msg');
-
-          var swishData = JSON.stringify({
-            version: 1,
-            payee: { value: swishNummer, editable: false },
-            amount: { value: Number(amount), editable: false },
-            message: { value: message, editable: true }
-          });
-
-          var encoded = encodeURIComponent(swishData);
-          var schemeLink = 'swish://payment?data=' + encoded;
-          var intentLink = 'intent://payment?data=' + encoded + '#Intent;scheme=swish;package=se.bankgirot.swish;end';
-
-          link.href = isAndroid ? intentLink : schemeLink;
-        }
-
-        selectEl.addEventListener('change', updateSwishLink);
-
-        link.addEventListener('click', function(e) {
-          e.preventDefault();
-          var selectedOption = selectEl.options[selectEl.selectedIndex];
-          var amount = selectedOption.value;
-          var message = selectedOption.getAttribute('data-msg');
-
-          if (isMobile) {
-            if (isAndroid) {
-              window.location.href = intentLinkDynamic();
-            } else {
-              window.location.href = schemeLinkDynamic();
-            }
-          } else {
-            alert("Öppna Swish-appen i din telefon och swisha " + amount + " kr till 123 128 02 21.\nMeddelande: " + message);
-          }
-        });
-
-        function schemeLinkDynamic() {
-          var opt = selectEl.options[selectEl.selectedIndex];
-          var d = JSON.stringify({
-            version: 1,
-            payee: { value: swishNummer, editable: false },
-            amount: { value: Number(opt.value), editable: false },
-            message: { value: opt.getAttribute('data-msg'), editable: true }
-          });
-          return 'swish://payment?data=' + encodeURIComponent(d);
-        }
-
-        function intentLinkDynamic() {
-          var opt = selectEl.options[selectEl.selectedIndex];
-          var d = JSON.stringify({
-            version: 1,
-            payee: { value: swishNummer, editable: false },
-            amount: { value: Number(opt.value), editable: false },
-            message: { value: opt.getAttribute('data-msg'), editable: true }
-          });
-          return 'intent://payment?data=' + encodeURIComponent(d) + '#Intent;scheme=swish;package=se.bankgirot.swish;end';
-        }
-
-        // Initiera länken direkt
-        updateSwishLink();
-      })();
-      </script>
 
     </div>
   </div>
@@ -608,31 +475,102 @@
 </div>
 
 <script>
-  const tooltip = document.querySelector('.th-tooltip');
-  const box = document.querySelector('.th-tooltip-box');
-  let hideTimer;
+(function() {
+  const swishNummer = "1231280221";
+  const selectEl = document.getElementById('fiskekortVal');
+  const link = document.getElementById('swishLink');
+  const statusText = document.getElementById('valdStatusText');
+  const copyNummerEl = document.getElementById('copySwishNummer');
 
-  if (tooltip && box) {
-    tooltip.addEventListener('mouseenter', () => {
-      clearTimeout(hideTimer);
-      tooltip.classList.add('active');
-    });
-    tooltip.addEventListener('mouseleave', () => {
-      hideTimer = setTimeout(() => tooltip.classList.remove('active'), 100);
-    });
-    box.addEventListener('mouseenter', () => clearTimeout(hideTimer));
-    box.addEventListener('mouseleave', () => {
-      hideTimer = setTimeout(() => tooltip.classList.remove('active'), 100);
+  const isAndroid = /Android/i.test(navigator.userAgent);
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const isMobile = isAndroid || isIOS || window.matchMedia('(pointer:coarse)').matches;
+
+  function updateSwishLink() {
+    var selectedOption = selectEl.options[selectEl.selectedIndex];
+    
+    if (!selectedOption.value) {
+      link.style.opacity = "0.6";
+      statusText.textContent = "Inget fiskekort valt";
+      return;
+    }
+    
+    link.style.opacity = "1";
+    var amount = selectedOption.value;
+    var message = selectedOption.getAttribute('data-msg');
+
+    statusText.textContent = "Valt: " + selectedOption.textContent;
+
+    var swishData = JSON.stringify({
+      version: 1,
+      payee: { value: swishNummer, editable: false },
+      amount: { value: Number(amount), editable: false },
+      message: { value: message, editable: true }
     });
 
-    tooltip.addEventListener('click', (e) => {
-      e.stopPropagation();
-      tooltip.classList.toggle('active');
-    });
-    document.addEventListener('click', () => {
-      tooltip.classList.remove('active');
-    });
+    var encoded = encodeURIComponent(swishData);
+    var schemeLink = 'swish://payment?data=' + encoded;
+    var intentLink = 'intent://payment?data=' + encoded + '#Intent;scheme=swish;package=se.bankgirot.swish;end';
+
+    link.href = isAndroid ? intentLink : schemeLink;
   }
+
+  selectEl.addEventListener('change', updateSwishLink);
+
+  link.addEventListener('click', function(e) {
+    var selectedOption = selectEl.options[selectEl.selectedIndex];
+    
+    if (!selectedOption.value) {
+      e.preventDefault();
+      alert("Vänligen välj typ av fiskekort i listan innan du betalar.");
+      return;
+    }
+
+    var amount = selectedOption.value;
+    var message = selectedOption.getAttribute('data-msg');
+
+    if (!isMobile) {
+      e.preventDefault();
+      alert("Öppna Swish-appen i din telefon och swisha " + amount + " kr till 123 128 02 21.\nMeddelande: " + message);
+    }
+  });
+
+  copyNummerEl.addEventListener('click', function() {
+    navigator.clipboard.writeText("1231280221").then(function() {
+      alert("Swishnumret 123 128 02 21 har kopierats till urklipp!");
+    }, function() {
+      alert("Kunde inte kopiera numret automatiskt.");
+    });
+  });
+
+  updateSwishLink();
+})();
+
+const tooltip = document.querySelector('.th-tooltip');
+const box = document.querySelector('.th-tooltip-box');
+let hideTimer;
+
+if (tooltip && box) {
+  tooltip.addEventListener('mouseenter', () => {
+    clearTimeout(hideTimer);
+    tooltip.classList.add('active');
+  });
+  tooltip.addEventListener('mouseleave', () => {
+    hideTimer = setTimeout(() => tooltip.classList.remove('active'), 100);
+  });
+  box.addEventListener('mouseenter', () => clearTimeout(hideTimer));
+  box.addEventListener('mouseleave', () => {
+    hideTimer = setTimeout(() => tooltip.classList.remove('active'), 100);
+  });
+
+  tooltip.addEventListener('click', (e) => {
+    e.stopPropagation();
+    tooltip.classList.toggle('active');
+  });
+  document.addEventListener('click', () => {
+    tooltip.classList.remove('active');
+  });
+}
 </script>
 
 </body>
