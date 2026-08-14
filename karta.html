@@ -124,10 +124,14 @@ function makeIcon(type, id) {
 const map = L.map('map').setView([61.350, 15.530], 10);
 
 // Kartlager
-// OpenTopoMap som topografiskt lager
-const lantmaterietTopo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-  maxZoom: 17,
-  attribution: 'Kartdata: &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>-bidragsgivare, <a href="http://viewfinderpanoramas.org">SRTM</a> | Kartstil: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+const lantmaterietTopo = L.tileLayer('https://minkarta.lantmateriet.se/map/topowebbcache/v1/wmts/1.0.0/topowebb/default/3006/{z}/{y}/{x}.png', {
+  maxZoom: 18,
+  attribution: '&copy; <a href="https://www.lantmateriet.se/">Lantmäteriet</a>',
+  // Den kritiska ändringen här är att vi behöver tillåta att kartan laddas 
+  // trots att koordinatsystemet är SWEREF99. 
+  // Om det fortfarande blir 404, betyder det att vi måste tvinga Leaflet 
+  // att använda rätt "tms" (Tile Map Service) format:
+  tms: true 
 });
 
 const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
