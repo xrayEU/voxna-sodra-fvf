@@ -124,13 +124,14 @@ function makeIcon(type, id) {
 const map = L.map('map').setView([61.350, 15.530], 10);
 
 // Kartlager
-// Ändra från WMS till en vanlig TileLayer (WMTS-stil)
-const lantmaterietTopo = L.tileLayer('https://minkarta.lantmateriet.se/map/topowebbcache/v1/wmts/1.0.0/topowebb/default/3006/{z}/{y}/{x}.png', {
+// Lantmäteriets topografiska webbkarta via WMS med rätt parametrar
+const lantmaterietTopo = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/topowebbcache/', {
+  layers: 'topowebb',
+  format: 'image/png',
+  transparent: false,
+  version: '1.1.1',
   maxZoom: 18,
-  attribution: '&copy; <a href="https://www.lantmateriet.se/">Lantmäteriet</a>',
-  // Dessa parametrar krävs för att matcha Lantmäteriets Tile-schema
-  tileSize: 256,
-  zoomOffset: 0
+  attribution: '&copy; <a href="https://www.lantmateriet.se/">Lantmäteriet</a>'
 });
 
 const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
