@@ -127,10 +127,11 @@ const map = L.map('map').setView([61.350, 15.530], 10);
 // --- Kartlager: Lantmäteriet, OSM och Satellit ---
 
 // Lantmäteriets officiella Topowebb (WMS)
-const lantmaterietTopo = L.tileLayer.wms('https://maps.lantmateriet.se/topowebb/wms/v1', {
+const lantmaterietTopo = L.tileLayer.wms('https://maps.lantmateriet.se/topowebb/wms/v1?', {
   layers: 'topowebb',
   format: 'image/png',
   transparent: false,
+  version: '1.1.1',
   attribution: '&copy; <a href="https://www.lantmateriet.se/">Lantmäteriet</a>',
   maxZoom: 18
 });
