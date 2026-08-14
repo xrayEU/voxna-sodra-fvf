@@ -126,16 +126,6 @@ const map = L.map('map').setView([61.350, 15.530], 10);
 // Kartlager
 // --- Kartlager: Lantmäteriet, OSM och Satellit ---
 
-// Lantmäteriets officiella Topowebb (WMS)
-const lantmaterietTopo = L.tileLayer.wms('https://maps.lantmateriet.se/topowebb/wms/v1?', {
-  layers: 'topowebb',
-  format: 'image/png',
-  transparent: false,
-  version: '1.1.1',
-  attribution: '&copy; <a href="https://www.lantmateriet.se/">Lantmäteriet</a>',
-  maxZoom: 18
-});
-
 // OpenStreetMap (Som backup)
 const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -149,12 +139,11 @@ const googleSatelliteLayer = L.tileLayer('https://mt0.google.com/vt/lyrs=s&x={x}
   subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
 });
 
-// Sätt Lantmäteriet som standardlager vid start
-lantmaterietTopo.addTo(map);
+// Sätt Google Satellit som standardlager vid start
+googleSatelliteLayer.addTo(map);
 
 // Lagerkontroll uppe i högra hörnet
 L.control.layers({
-  'Lantmäteriet Topo': lantmaterietTopo,
   'OpenStreetMap': osmLayer,
   'Google Satellit': googleSatelliteLayer
 }, null, {
