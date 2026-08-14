@@ -45,7 +45,6 @@
 
     <div id="map"></div>
 
-
     <div id="legend">
       <div class="legend-item"><div class="legend-dot dot-blue"></div> Fiskevatten</div>
       <div class="legend-item"><div class="legend-dot dot-orange"></div>Eget dagkort krävs</div>
@@ -124,6 +123,15 @@ function makeIcon(type, id) {
 
 const map = L.map('map').setView([61.350, 15.530], 10);
 
+// Kartlager
+const lantmaterietTopo = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/topowebbcache/', {
+  layers: 'topowebb',
+  format: 'image/png',
+  transparent: true,
+  maxZoom: 18,
+  attribution: '&copy; <a href="https://www.lantmateriet.se/">Lantmäteriet</a>'
+});
+
 const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-bidragsgivare',
   maxZoom: 18
@@ -135,9 +143,11 @@ const googleSatelliteLayer = L.tileLayer('https://mt0.google.com/vt/lyrs=s&x={x}
   subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
 });
 
-googleSatelliteLayer.addTo(map);
+// Sätt Lantmäteriets topografiska karta som standard vid laddning
+lantmaterietTopo.addTo(map);
 
 L.control.layers({
+  'Lantmäteriet Topo': lantmaterietTopo,
   'OpenStreetMap': osmLayer,
   'Google Satellite': googleSatelliteLayer
 }, null, {
@@ -203,6 +213,19 @@ waters.forEach(w => {
   };
   grid.appendChild(div);
 });
+
+// Fånga upp ?plats=voxnalivs från webbadressen
+const urlParams = new URLSearchParams(window.location.search);
+const valdPlats = urlParams.get('plats');
+
+if (valdPlats === 'voxnalivs') {
+  // Hitta Voxna Livs (id 19) och zooma in
+  const voxnaLivs = waters.find(w => w.id === 19);
+  if (voxnaLivs && markers[19]) {
+    map.setView([voxnaLivs.lat, voxnaLivs.lng], 14);
+    markers[19].openPopup();
+  }
+}
 </script>
 
 <script>

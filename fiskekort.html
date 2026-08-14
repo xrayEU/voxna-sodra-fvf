@@ -129,11 +129,9 @@
           </a>
         </div>
 
-        </div>
-
-        <!-- Datorvyn (PC) – Visar endast instruktion och QR-kod -->
-        <div class="desktop-only">
-          <div class="swish-info-text">
+        <!-- Datorvyn (PC) – Inbakad i enhetlig grön box -->
+        <div class="desktop-only" style="border: 1px solid #d4eec0; background: #f9fff6; padding: 20px; border-radius: 8px; text-align: center; max-width: 320px; margin-top: 10px;">
+          <div class="swish-info-text" style="margin-bottom: 12px; font-size: 0.95rem; color: #333;">
             Scanna QR-koden med din mobilkamera för att swisha. Swishnummer: <strong>123 128 02 21</strong>
           </div>
           <div>
@@ -188,16 +186,16 @@
     var selectedOption = selectEl.options[selectEl.selectedIndex];
     
     if (!selectedOption.value) {
-      link.style.opacity = "0.6";
-      statusText.textContent = "Inget fiskekort valt";
+      if (link) link.style.opacity = "0.6";
+      if (statusText) statusText.textContent = "Inget fiskekort valt";
       return;
     }
     
-    link.style.opacity = "1";
+    if (link) link.style.opacity = "1";
     var amount = selectedOption.value;
     var message = selectedOption.getAttribute('data-msg');
 
-    statusText.textContent = "Valt: " + selectedOption.textContent;
+    if (statusText) statusText.textContent = "Valt: " + selectedOption.textContent;
 
     var swishData = JSON.stringify({
       version: 1,
@@ -210,7 +208,7 @@
     var schemeLink = 'swish://payment?data=' + encoded;
     var intentLink = 'intent://payment?data=' + encoded + '#Intent;scheme=swish;package=se.bankgirot.swish;end';
 
-    link.href = isAndroid ? intentLink : schemeLink;
+    if (link) link.href = isAndroid ? intentLink : schemeLink;
   }
 
   if (selectEl) {
