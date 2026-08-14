@@ -78,24 +78,24 @@
 <script>
 const waters = [
   { id:1,  name:"Räkasjöarna",         lat:61.42736,  lng:15.38530, type:"normal",  info:"Fiskevatten inom föreningens område." },
-  { id:2,  name:"Råttjärnasjön",        lat:61.42024,  lng:15.55037, type:"normal",  info:"Fiskevatten inom föreningens område." },
-  { id:3,  name:"Sälmsjöarna",          lat:61.38950,  lng:15.40336, type:"normal",  info:"Fiskevatten inom föreningens område." },
-  { id:4,  name:"Södra Brynåssjön",     lat:61.38572,  lng:15.56325, type:"normal",  info:"Fiskevatten inom föreningens område." },
-  { id:5,  name:"Övre Hammaren",        lat:61.36767,  lng:15.48059, type:"normal",  info:"Fiskevatten inom föreningens område." },
-  { id:6,  name:"Stora Båtsjön",        lat:61.36756,  lng:15.44627, type:"normal",  info:"Fiskevatten inom föreningens område." },
-  { id:7,  name:"Galttjärn",            lat:61.36224,  lng:15.52888, type:"special", info:"Regnbåge. Eget dagkort krävs – 100:- (max 2 fiskar). Köps vid Voxna Livs eller Voxnabruks Kanot & Camping. Årskort gäller ej." },
-  { id:8,  name:"Finnstugaströmmen",    lat:61.34428,  lng:15.58149, type:"special", info:"Flugfiske med hullingslös enkelkrok. Catch & Release – all fisk återutsätts. Eget dagkort 100:-. Ingår även i årskortet." },
-  { id:9,  name:"Finnsen",              lat:61.31531,  lng:15.51531, type:"special", info:"Röding, Öring. Eget dagkort 200:- (max 3 fiskar). Båt att hyra 100:-. Elmotor ej tillåtet. Bokning via Voxna Livs, tel: 0271-41067." },
-  { id:10, name:"Hälltjärn",            lat:61.30252,  lng:15.63055, type:"special", info:"Röding, Öring. Eget dagkort 100:- (max 3 fiskar). Ingår även i årskortet." },
-  { id:11, name:"Villtjärnen",          lat:61.30797,  lng:15.65276, type:"normal",  info:"Fiskevatten inom föreningens område." },
-  { id:12, name:"Långaspen",            lat:61.29950,  lng:15.59495, type:"normal",  info:"Fiskevatten inom föreningens område." },
-  { id:13, name:"Stensjön",             lat:61.29536,  lng:15.65101, type:"normal",  info:"Fiskevatten inom föreningens område." },
-  { id:14, name:"Mörtsjön",             lat:61.28561,  lng:15.62032, type:"normal",  info:"Fiskevatten inom föreningens område." },
-  { id:15, name:"Övre Tälningen",       lat:61.25652,  lng:15.65010, type:"normal",  info:"Fiskevatten inom föreningens område." },
-  { id:16, name:"Övre Tälningsån",      lat:61.25058,  lng:15.68864, type:"normal",  info:"Strömmande vatten inom föreningens område." },
-  { id:17, name:"Pålsjön",              lat:61.30767,  lng:15.55199, type:"normal",  info:"Fiskevatten inom föreningens område." },
-  { id:18, name:"Vitaspen",             lat:61.24003,  lng:15.62744, type:"normal",  info:"Fiskevatten inom föreningens område." },
-  { id:19, name:"Voxna Livs",           lat:61.36550,  lng:15.52745, type:"shop",    info:"Här köper du fiskekort. Öppet i butiken under ordinarie öppettider, övrig tid via automat vid entrén. Tel: 0271-41067." },
+  { id:2,  name:"Råttjärnasjön",         lat:61.42024,  lng:15.55037, type:"normal",  info:"Fiskevatten inom föreningens område." },
+  { id:3,  name:"Sälmsjöarna",           lat:61.38950,  lng:15.40336, type:"normal",  info:"Fiskevatten inom föreningens område." },
+  { id:4,  name:"Södra Brynåssjön",      lat:61.38572,  lng:15.56325, type:"normal",  info:"Fiskevatten inom föreningens område." },
+  { id:5,  name:"Övre Hammaren",         lat:61.36767,  lng:15.48059, type:"normal",  info:"Fiskevatten inom föreningens område." },
+  { id:6,  name:"Stora Båtsjön",         lat:61.36756,  lng:15.44627, type:"normal",  info:"Fiskevatten inom föreningens område." },
+  { id:7,  name:"Galttjärn",             lat:61.36224,  lng:15.52888, type:"special", info:"Regnbåge. Eget dagkort krävs – 100:- (max 2 fiskar). Köps vid Voxna Livs eller Voxnabruks Kanot & Camping. Årskort gäller ej." },
+  { id:8,  name:"Finnstugaströmmen",     lat:61.34428,  lng:15.58149, type:"special", info:"Flugfiske med hullingslös enkelkrok. Catch & Release – all fisk återutsätts. Eget dagkort 100:-. Ingår även i årskortet." },
+  { id:9,  name:"Finnsen",               lat:61.31531,  lng:15.51531, type:"special", info:"Röding, Öring. Eget dagkort 200:- (max 3 fiskar). Båt att hyra 100:-. Elmotor ej tillåtet. Bokning via Voxna Livs, tel: 0271-41067." },
+  { id:10, name:"Hälltjärn",             lat:61.30252,  lng:15.63055, type:"special", info:"Röding, Öring. Eget dagkort 100:- (max 3 fiskar). Ingår även i årskortet." },
+  { id:11, name:"Villtjärnen",           lat:61.30797,  lng:15.65276, type:"normal",  info:"Fiskevatten inom föreningens område." },
+  { id:12, name:"Långaspen",             lat:61.29950,  lng:15.59495, type:"normal",  info:"Fiskevatten inom föreningens område." },
+  { id:13, name:"Stensjön",              lat:61.29536,  lng:15.65101, type:"normal",  info:"Fiskevatten inom föreningens område." },
+  { id:14, name:"Mörtsjön",              lat:61.28561,  lng:15.62032, type:"normal",  info:"Fiskevatten inom föreningens område." },
+  { id:15, name:"Övre Tälningen",        lat:61.25652,  lng:15.65010, type:"normal",  info:"Fiskevatten inom föreningens område." },
+  { id:16, name:"Övre Tälningsån",       lat:61.25058,  lng:15.68864, type:"normal",  info:"Strömmande vatten inom föreningens område." },
+  { id:17, name:"Pålsjön",               lat:61.30767,  lng:15.55199, type:"normal",  info:"Fiskevatten inom föreningens område." },
+  { id:18, name:"Vitaspen",              lat:61.24003,  lng:15.62744, type:"normal",  info:"Fiskevatten inom föreningens område." },
+  { id:19, name:"Voxna Livs",            lat:61.36550,  lng:15.52745, type:"shop",    info:"Här köper du fiskekort. Öppet i butiken under ordinarie öppettider, övrig tid via automat vid entrén. Tel: 0271-41067." },
 ];
 
 function makeIcon(type, id) {
@@ -124,37 +124,43 @@ function makeIcon(type, id) {
 const map = L.map('map').setView([61.350, 15.530], 10);
 
 // Kartlager
-const lantmaterietTopo = L.tileLayer('https://minkarta.lantmateriet.se/map/topowebbcache/v1/wmts/1.0.0/topowebb/default/3006/{z}/{y}/{x}.png', {
-  maxZoom: 18,
-  attribution: '&copy; <a href="https://www.lantmateriet.se/">Lantmäteriet</a>',
-  // Den kritiska ändringen här är att vi behöver tillåta att kartan laddas 
-  // trots att koordinatsystemet är SWEREF99. 
-  // Om det fortfarande blir 404, betyder det att vi måste tvinga Leaflet 
-  // att använda rätt "tms" (Tile Map Service) format:
-  tms: true 
-});
+// --- Kartlager: Lantmäteriet, OSM och Satellit ---
 
-const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-bidragsgivare',
+// Lantmäteriets officiella Topowebb (WMS)
+const lantmaterietTopo = L.tileLayer.wms('https://maps.lantmateriet.se/topowebb/wms/v1', {
+  layers: 'topowebb',
+  format: 'image/png',
+  transparent: false,
+  attribution: '&copy; <a href="https://www.lantmateriet.se/">Lantmäteriet</a>',
   maxZoom: 18
 });
 
+// OpenStreetMap (Som backup)
+const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  maxZoom: 18
+});
+
+// Google Satellit
 const googleSatelliteLayer = L.tileLayer('https://mt0.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
   attribution: '© Google',
   maxZoom: 20,
   subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
 });
 
-// Sätt Lantmäteriets topografiska karta som standard vid laddning
+// Sätt Lantmäteriet som standardlager vid start
 lantmaterietTopo.addTo(map);
 
+// Lagerkontroll uppe i högra hörnet
 L.control.layers({
   'Lantmäteriet Topo': lantmaterietTopo,
   'OpenStreetMap': osmLayer,
-  'Google Satellite': googleSatelliteLayer
+  'Google Satellit': googleSatelliteLayer
 }, null, {
   position: 'topright'
 }).addTo(map);
+
+// --- Slut på kartlager ---
 
 // Område - Voxna Södra Fiskevårdsförening
 const omrade = [
