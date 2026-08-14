@@ -124,14 +124,10 @@ function makeIcon(type, id) {
 const map = L.map('map').setView([61.350, 15.530], 10);
 
 // Kartlager
-// Lantmäteriets topografiska webbkarta via WMS med rätt parametrar
-const lantmaterietTopo = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/topowebbcache/', {
-  layers: 'topowebb',
-  format: 'image/png',
-  transparent: false,
-  version: '1.1.1',
-  maxZoom: 18,
-  attribution: '&copy; <a href="https://www.lantmateriet.se/">Lantmäteriet</a>'
+// OpenTopoMap som topografiskt lager
+const lantmaterietTopo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+  maxZoom: 17,
+  attribution: 'Kartdata: &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>-bidragsgivare, <a href="http://viewfinderpanoramas.org">SRTM</a> | Kartstil: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
 });
 
 const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
