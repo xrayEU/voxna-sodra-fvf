@@ -121,8 +121,7 @@ function makeIcon(type, id) {
 
 const map = L.map('map').setView([61.350, 15.530], 10);
 
-// Kartlager
-// --- Kartlager: Lantmäteriet, OSM och Satellit ---
+
 
 // OpenStreetMap (Som backup)
 const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -137,8 +136,7 @@ const googleSatelliteLayer = L.tileLayer('https://mt0.google.com/vt/lyrs=s&x={x}
   subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
 });
 
-// Sätt Google Satellit som standardlager vid start
-googleSatelliteLayer.addTo(map);
+osmLayer.addTo(map);
 
 // Lagerkontroll uppe i högra hörnet
 L.control.layers({
