@@ -8,6 +8,36 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<script>
+  (function () {
+    const adminTokenKey = 'voxna_admin_token';
+    const loginPage = 'admin/index.html';
+    const token = localStorage.getItem(adminTokenKey);
+
+    if (!token) {
+      window.location.replace(loginPage);
+      return;
+    }
+
+    fetch('https://api.github.com/user', {
+      headers: { Authorization: `token ${token}` }
+    })
+      .then(async response => {
+        if (!response.ok) {
+          throw new Error('Ogiltigt token');
+        }
+
+        const data = await response.json();
+        if (!data || !data.login) {
+          throw new Error('Ingen användare');
+        }
+      })
+      .catch(() => {
+        localStorage.removeItem(adminTokenKey);
+        window.location.replace(loginPage);
+      });
+  })();
+</script>
 
 <div id="wrapper">
   <div id="header">
